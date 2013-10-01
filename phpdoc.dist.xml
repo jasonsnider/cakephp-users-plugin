@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <parser>
+        <target>/var/www/cakephp/app/webroot/docs/users/output</target>
+    </parser>
+    <transformer>
+        <target>/var/www/cakephp/app/webroot/docs/users/api</target>
+    </transformer>
+    <files>
+        <directory>.</directory>
+        <ignore>tmp/*</ignore>
+    </files>
+</phpdoc>
+
+

@@ -1,0 +1,1 @@
+<div id="flashMessage" class="message"><?php echo $this->Session->read('Message.flash.message'); ?></div>
