@@ -243,7 +243,7 @@ class User extends UsersAppModel {
     public function createUser($data) {
         
         $data['User']['root'] = $this->_setRootForFirstUser();
-        $data['User']['employee'] = $this->_setEmployeetForFirstUser();
+        $data['User']['employee'] = $this->_setEmployeeForFirstUser();
 
         $data = array(
             'User' => $data['User'],
