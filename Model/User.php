@@ -202,7 +202,7 @@ class User extends UsersAppModel {
      * Returns true if no users exist in the database
      * @return boolean
      */
-    public function isFirstUser() {
+    protected function _isFirstUser() {
 
         $isEmpty = $this->find('first', array('contain' => array()));
 
@@ -212,84 +212,27 @@ class User extends UsersAppModel {
 
         return false;
     }
-
+    
     /**
-     * Returns an array of privileges to be assigned to a new user. 
-     * 
-     * -The first user created should be assigned all user controller privilege
-     * 
-     * @return array
+     * Returns 1 if the no other users have been created
+     * @return integer
      */
-    public function defaultPrivilege() {
-        $firstUser = $this->isFirstUser();
-        if ($firstUser) {
-            $privileges = array(
-                array(
-                    'model' => 'user',
-                    'controller' => 'users_controller',
-                    'action' => 'admin_index',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'users_controller',
-                    'action' => 'admin_edit',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'users_controller',
-                    'action' => 'admin_view',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'users_controller',
-                    'action' => 'admin_create',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'users_controller',
-                    'action' => 'admin_delete',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'privilege_groups_controller',
-                    'action' => 'admin_index',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'privilege_groups_controller',
-                    'action' => 'admin_edit',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'privilege_groups_controller',
-                    'action' => 'admin_view',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'privilege_groups_controller',
-                    'action' => 'admin_create',
-                    'allowed' => 1
-                ),
-                array(
-                    'model' => 'user',
-                    'controller' => 'privilege_groups_controller',
-                    'action' => 'admin_delete',
-                    'allowed' => 1
-                )
-            );
-        } else {
-            $privileges = array();
+    protected function _setRootForFirstUser(){
+        if($this->_isFirstUser()){
+            return (INT)1;
         }
-
-        return $privileges;
+        return (INT)0;
+    }
+    
+    /**
+     * Returns 1 if the no other users have been created
+     * @return integer
+     */
+    protected function _setEmployeeForFirstUser(){
+        if($this->_isFirstUser()){
+            return (INT)1;
+        }
+        return (INT)0;
     }
 
     /**
@@ -298,16 +241,19 @@ class User extends UsersAppModel {
      * @return boolean
      */
     public function createUser($data) {
+        
+        $data['User']['root'] = $this->_setRootForFirstUser();
+        $data['User']['employee'] = $this->_setRootForFirstUser();
 
         $data = array(
             'User' => $data['User'],
-            'UserPrivilege' => $this->defaultPrivilege(),
+            //'UserPrivilege' => $this->defaultPrivilege(),
             'UserSetting' => array(
                 'visibility' => 'public'
             ),
             'EmailAddress' => $data['EmailAddress']
         );
-
+        
         $newUser = $this->saveAll($data);
         return empty($newUser) ? false : true;
     }

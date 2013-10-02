@@ -71,6 +71,7 @@ class UserTest extends CakeTestCase {
         );
 
         $this->User->create();
+        
         if ($this->User->save($data)) {
             $result = $this->User->find(
                     'first', array(
@@ -97,6 +98,71 @@ class UserTest extends CakeTestCase {
         $this->assertFalse($match);
     }
 
+    /**
+     * If root and employee settings are set for the first user but not the second, then first user detection is working
+     */
+    public function testCanDetectFirstUser(){
+        
+        //Clean out the users table
+        $this->User->query('Truncate TABLE users');
+        
+        //Create a basic user array
+        $data=array(
+            'User'=>array(
+                'username'=>'bob',
+                'password'=>'password',
+                'verify_password'=>'password'
+            ),
+            'EmailAddress'=>array(
+                'email'=>'bob@example.com'
+            )
+        );
+        
+        $this->User->createUser($data);
+
+        $user = $this->User->find(
+            'first', 
+            array(
+                'conditions'=>array(
+                    'User.id'=>$this->User->id
+                ),
+                'contain'=>array()
+            )
+        );
+        
+        //The first user created MUST have root and employee flags set by default
+        $this->assertEqual(1, $user['User']['root']);
+        $this->assertEqual(1, $user['User']['employee']);
+        
+        $data2=array(
+            'User'=>array(
+                'username'=>'bob2',
+                'password'=>'password',
+                'verify_password'=>'password'
+            ),
+            'EmailAddress'=>array(
+                'email'=>'bob2@example.com'
+            )
+        );
+        
+        $this->User->createUser($data2);
+
+        $user2 = $this->User->find(
+            'first', 
+            array(
+                'conditions'=>array(
+                    'User.id'=>$this->User->id
+                ),
+                'contain'=>array()
+            )
+        );
+        
+        //Any user created after the first CANNOT have root and employee flags set by default
+        $this->assertEqual(0, $user2['User']['root']);
+        $this->assertEqual(0, $user2['User']['employee']);
+        
+    }
+    
     /**
      * 
      */
@@ -158,42 +224,6 @@ class UserTest extends CakeTestCase {
 
         $this->assertEmpty($result2['User']['hash']);
         $this->assertEmpty($result2['User']['salt']);
-    }
-
-    /**
-     * Test the creation of a new user
-     */
-    public function testNewUserIsCreatedWithAssociatedData() {
-
-        $data = array(
-            'User' => array(
-                'username' => 'testusername',
-                'password' => 'password',
-                'verify_password' => 'password'
-            ),
-            'EmailAddress' => array(
-                'email' => 'test@example.com'
-            )
-        );
-
-        $this->User->create();
-        if ($this->User->createUser($data)) {
-            $result = $this->User->find(
-                    'first', array(
-                'conditions' => array(
-                    'User.id' => $this->User->id
-                ),
-                'contain' => array(
-                    'EmailAddress',
-                    'UserSetting'
-                )
-                    )
-            );
-        }
-
-        //debug($result);
-        //If the associated data was created I will be able to pull the user id
-        $this->assertEquals($this->User->id, $result['UserSetting']['user_id']);
     }
 
     /**
