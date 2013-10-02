@@ -173,13 +173,14 @@ class User extends UsersAppModel {
 
         //DO NOT allow empty records to be deleted
         $record = $this->find(
-                'first', array(
-            'conditions' => array(
-                "{$this->alias}.id" => $this->id,
-                "{$this->alias}.protected" => 0,
-            ),
-            'contain' => array()
-                )
+            'first', 
+            array(
+                'conditions' => array(
+                    "{$this->alias}.id" => $this->id,
+                    "{$this->alias}.protected" => 0,
+                ),
+                'contain' => array()
+            )
         );
 
         return empty($record) ? false : true;
@@ -309,15 +310,16 @@ class User extends UsersAppModel {
     public function fetchUserSalt($username) {
 
         $user = $this->find(
-                'first', array(
-            'conditions' => array(
-                "{$this->alias}.username" => $username
-            ),
-            'fields' => array(
-                "{$this->alias}.salt"
-            ),
-            'contain' => array()
-                )
+            'first', 
+            array(
+                'conditions' => array(
+                    "{$this->alias}.username" => $username
+                ),
+                'fields' => array(
+                    "{$this->alias}.salt"
+                ),
+                'contain' => array()
+            )
         );
 
         return empty($user) ? false : $user[$this->alias]['salt'];
@@ -335,47 +337,52 @@ class User extends UsersAppModel {
         $hash = StringHash::password($password, $salt);
 
         $user = $this->find(
-                'first', array(
-            'conditions' => array(
-                "{$this->alias}.username" => $username,
-                "{$this->alias}.hash" => $hash
-            ),
-            'fields' => array(
-                "{$this->alias}.id"
-            ),
-            'contain' => array()
-                )
+            'first', 
+            array(
+                'conditions' => array(
+                    "{$this->alias}.username" => $username,
+                    "{$this->alias}.hash" => $hash
+                ),
+                'fields' => array(
+                    "{$this->alias}.id"
+                ),
+                'contain' => array()
+            )
         );
 
         return empty($user) ? false : $user[$this->alias]['id'];
     }
 
     /**
-     * Users a verfiedUserId to retrive a users data for login. The returned data array will be used as session data.
+     * Returns a user array. The returned data array is intended to be used as session data.
      * @param string $verifiedUserId
      * @return boolean|array
      */
     public function fetchVerifiedUser($verifiedUserId) {
 
         $user = $this->find(
-                'first', array(
-            'conditions' => array(
-                "{$this->alias}.id" => $verifiedUserId
-            ),
-            'fields' => array(),
-            'contain' => array(
-                'GroupUser',
-                'UserSetting'
-            )
+            'first', 
+            array(
+                'conditions' => array(
+                    "{$this->alias}.id" => $verifiedUserId
+                ),
+                'fields' => array(),
+                'contain' => array(
+                    'GroupUser',
+                    'UserSetting'
                 )
+            )
         );
 
         $verifiedUser = array();
         $verifiedUser['User'] = $user['User'];
+        
         //Add the users settings
         $verifiedUser['User']['UserSetting'] = $user['UserSetting'];
+        
         //Add the id of each group to which the user is a member
         $verifiedUser['User']['GroupUser'] = Set::extract('/GroupUser/./group_id', $user);
+        
         return empty($user) ? false : $verifiedUser;
     }
 
@@ -391,16 +398,18 @@ class User extends UsersAppModel {
      * @return boolean
      */
     public function createPasswordReset($username) {
-        //Create a functin for verifiable users?
+        
+        //Create a function for verifiable users
         $user = $this->find(
-                'first', array(
-            'conditions' => array(
-                'User.username' => $username
-            ),
-            'contain' => array(
-                'EmailAddress'
-            )
+            'first', 
+            array(
+                'conditions' => array(
+                    'User.username' => $username
+                ),
+                'contain' => array(
+                    'EmailAddress'
                 )
+            )
         );
 
         if (!empty($user)) {
@@ -413,7 +422,7 @@ class User extends UsersAppModel {
             if ($this->save($data)) {
 
                 $serverName = env('SERVER_NAME');
-                $entityName = 'Picilicious';
+                $entityName = 'The Parbake Project';
 
                 $email = new CakeEmail('passwordReset');
                 $email->to($user['EmailAddress'][0]['email'])
@@ -446,17 +455,18 @@ class User extends UsersAppModel {
     public function verfiyPasswordReset($username, $password_confirmation) {
 
         $confirm = $this->find(
-                'first', array(
-            'conditions' => array(
-                "{$this->alias}.password_confirmation_expiry >=" => date('Y-m-d H:i:s'),
-                "{$this->alias}.password_confirmation" => $password_confirmation,
-                "{$this->alias}.username" => $username
-            ),
-            'fields' => array(
-                "{$this->alias}.id"
-            ),
-            'contain' => array()
-                )
+            'first', 
+            array(
+                'conditions' => array(
+                    "{$this->alias}.password_confirmation_expiry >=" => date('Y-m-d H:i:s'),
+                    "{$this->alias}.password_confirmation" => $password_confirmation,
+                    "{$this->alias}.username" => $username
+                ),
+                'fields' => array(
+                    "{$this->alias}.id"
+                ),
+                'contain' => array()
+            )
         );
 
         if (!empty($confirm)) {

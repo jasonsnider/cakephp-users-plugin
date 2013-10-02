@@ -352,11 +352,8 @@ class UsersController extends UsersAppController {
             if ($this->User->createPasswordReset($username)) {
 
                 $this->Session->setFlash(
-                        __("We've sent password reset instructions to your email address.")
-                        . __("<p><small>If you don't receive instructions within a minute or two, check your email's spam "
-                                . "and junk filters, or try <a href=\"/users/reset_password_request\">resending your request."
-                                . "</a></small></p>")
-                        , 'success'
+                    __("We've sent password reset instructions to your email address."),
+                    'success'
                 );
 
                 $this->redirect("/users/reset_password/{$username}");
