@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Provides controll logic for groups
+ * Provides controll logic for user_groups
  *
  * Parbake (http://jasonsnider.com/parbake)
  * Copyright 2012, Jason D Snider. (http://jasonsnider.com)
@@ -18,18 +18,18 @@
 App::uses('UsersAppController', 'Users.Controller');
 
 /**
- * Provides controll logic for managing groups
+ * Provides controll logic for managing user_groups
  * @author Jason D Snider <jason.snider@42viral.org>
- * @package app/Groups
+ * @package app/UserGroups
  */
-class GroupsController extends UsersAppController {
+class UserGroupsController extends UsersAppController {
 
     /**
      * Holds the name of the controller
      *
      * @var string
      */
-    public $name = 'Groups';
+    public $name = 'UserGroups';
 
     /**
      * Called before action
@@ -47,11 +47,11 @@ class GroupsController extends UsersAppController {
      * @var array
      */
     public $uses = array(
-        'Users.Group'
+        'Users.UserGroup'
     );
 
     /**
-     * Displays an index of all groups
+     * Displays an index of all user_groups
      */
     public function admin_index() {
 
@@ -60,18 +60,18 @@ class GroupsController extends UsersAppController {
             'limit' => 30
         );
 
-        $groups = $this->paginate('Group');
-        $this->set(compact('groups'));
+        $user_groups = $this->paginate('UserGroup');
+        $this->set(compact('user_groups'));
     }
 
     /**
-     * A method for creating a new group in the system
+     * A method for creating a new user_group in the system
      */
     public function admin_create() {
 
         if (!empty($this->request->data)) {
 
-            if ($this->Group->createGroup($this->request->data)) {
+            if ($this->UserGroup->createUserGroup($this->request->data)) {
                 $this->Session->setFlash(__('The record has been created!'), 'success');
             } else {
                 $this->Session->setFlash(__('Please correct the erros below!'), 'error');
@@ -80,85 +80,85 @@ class GroupsController extends UsersAppController {
     }
 
     /**
-     * A method for creating a new group in the system
+     * A method for creating a new user_group in the system
      * @param string $id
      */
     public function admin_view($id) {
 
-        $group = $this->Group->find(
+        $user_group = $this->UserGroup->find(
                 'first', array(
             'conditions' => array(
-                'Group.id' => $id
+                'UserGroup.id' => $id
             ),
             'contain' => array()
                 )
         );
 
-        $this->set(compact('group', 'id'));
+        $this->set(compact('user_group', 'id'));
     }
 
     /**
-     * Allows an admin to update a groups record
+     * Allows an admin to update a user_groups record
      * @param string $id
      */
     public function admin_edit($id) {
 
         if (!empty($this->request->data)) {
 
-            foreach ($this->request->data['GroupPrivilege'] as $key => $values) {
+            foreach ($this->request->data['UserGroupPrivilege'] as $key => $values) {
                 if ($values['allowed'] == 2) {
                     if (isset($values['id'])) {
                         //If a previously set priv is set to undefined, delete it's record fron the system.
-                        $this->Group->GroupPrivilege->delete($values['id']);
+                        $this->UserGroup->UserGroupPrivilege->delete($values['id']);
                     }
-                    unset($this->request->data['GroupPrivilege'][$key]);
+                    unset($this->request->data['UserGroupPrivilege'][$key]);
                 }
             }
 
-            if ($this->Group->saveAll($this->request->data)) {
+            if ($this->UserGroup->saveAll($this->request->data)) {
                 $this->Session->setFlash(__('The record has been update!'), 'success');
             } else {
                 $this->Session->setFlash(__('The record could not be updated!'), 'error');
             }
         }
 
-        $this->request->data = $this->Group->find(
+        $this->request->data = $this->UserGroup->find(
                 'first', array(
             'conditions' => array(
-                'Group.id' => $id
+                'UserGroup.id' => $id
             ),
             'contain' => array(
-                'GroupPrivilege'
+                'UserGroupPrivilege'
             )
                 )
         );
 
-        if (isset($this->request->data['GroupPrivilege'])) {
-            $groupPrivileges = $this->request->data['GroupPrivilege'];
+        if (isset($this->request->data['UserGroupPrivilege'])) {
+            $user_groupPrivileges = $this->request->data['UserGroupPrivilege'];
         } else {
-            $groupPrivileges = array();
+            $user_groupPrivileges = array();
         }
 
-        $controllers = $this->Authorize->privileges($groupPrivileges);
+        $controllers = $this->Authorize->privileges($user_groupPrivileges);
 
         $this->set(compact('id', 'controllers'));
     }
 
     /**
-     * A method for deleting a group
+     * A method for deleting a user_group
      * @param string $id
      */
     public function admin_delete($id) {
 
         if (!empty($id)) {
-            if ($this->Group->purgeGroup($id)) {
-                $this->Session->setFlash(__("Group {$id} has been deleted!"), 'success');
+            if ($this->UserGroup->purgeUserGroup($id)) {
+                $this->Session->setFlash(__("UserGroup {$id} has been deleted!"), 'success');
             } else {
-                $this->Session->setFlash(__("Group {$id} could not be deleted!"), 'error');
+                $this->Session->setFlash(__("UserGroup {$id} could not be deleted!"), 'error');
             }
         }
 
-        $this->redirect('/admin/groups');
+        $this->redirect('/admin/user_groups');
     }
 
 }

@@ -32,7 +32,7 @@ class UserTest extends CakeTestCase {
      */
     public $fixtures = array(
         'plugin.users.email_address',
-        'plugin.users.group_user',
+        'plugin.users.user_group_user',
         'plugin.users.user',
         'plugin.users.user_privilege',
         'plugin.users.user_setting'
@@ -399,7 +399,7 @@ class UserTest extends CakeTestCase {
 
         $this->assertArrayHasKey('id', $results['User']);
         $this->assertArrayHasKey('id', $results['User']['UserSetting']);
-        $this->assertContains('50a1c275-8c38-477d-8682-0f247f000007', $results['User']['GroupUser']);
+        $this->assertContains('50a1c275-8c38-477d-8682-0f247f000007', $results['User']['UserGroupUser']);
         $this->assertEquals($results['User']['username'], 'jason');
     }
 

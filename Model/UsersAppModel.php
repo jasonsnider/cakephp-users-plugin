@@ -63,10 +63,10 @@ class UsersAppModel extends AppModel {
      * @param array $list
      * @param array $tags
      * @param string $category
-     * @param boolean $groupedList
+     * @param boolean $user_groupedList
      * @return array
      */
-    public function getList($list, $tags = null, $category = null, $groupedList = false) {
+    public function getList($list, $tags = null, $category = null, $user_groupedList = false) {
         $options = array();
 
         //Return a flat list of elements matching specific tags
@@ -93,8 +93,8 @@ class UsersAppModel extends AppModel {
             goto end;
         }
 
-        //Returns a list that is grouped by category
-        if (!empty($groupedList)) {
+        //Returns a list that is user_grouped by category
+        if (!empty($user_groupedList)) {
             foreach ($list as $option) {
                 if (empty($option['_inactive'])) {
                     $options[$option['category']][$option['_ref']] = $option['label'];

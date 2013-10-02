@@ -11,7 +11,7 @@
             <h3>Admin Sections</h3>
             <ul>
                 <li><?php echo $this->Html->link('Users', '/admin/users'); ?></li>
-                <li><?php echo $this->Html->link('Groups', '/admin/groups'); ?></li>
+                <li><?php echo $this->Html->link('UserGroups', '/admin/user_groups'); ?></li>
             </ul>
         <?php endif; ?>
             

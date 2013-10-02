@@ -21,19 +21,19 @@ App::uses('UsersAppModel', 'Users.Model');
  * @author Jason D Snider <jason@jasonsnider.com>
  * @package	Users
  */
-class GroupUser extends UsersAppModel {
+class UserGroupUser extends UsersAppModel {
 
     /**
      * Holds the model name
      * @var string
      */
-    public $name = 'GroupUser';
+    public $name = 'UserGroupUser';
 
     /**
      * Holds the name of the database table used by the model
      * @var string 
      */
-    public $useTable = 'group_users';
+    public $useTable = 'user_group_users';
 
     /**
      * Specifies the behaviors invoked by the model
@@ -54,9 +54,9 @@ class GroupUser extends UsersAppModel {
      * @var array
      */
     public $belongsTo = array(
-        'Group' => array(
-            'className' => 'Users.Group',
-            'foreignKey' => 'group_id',
+        'UserGroup' => array(
+            'className' => 'Users.UserGroup',
+            'foreignKey' => 'user_group_id',
             'dependent' => true
         ),
         'User' => array(

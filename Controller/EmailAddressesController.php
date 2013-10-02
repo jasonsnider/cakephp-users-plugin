@@ -93,13 +93,13 @@ class EmailAddressesController extends UsersAppController {
     }
 
     /**
-     * A method for deleting a group
+     * A method for deleting a user_group
      * @param string $id
      */
     public function admin_delete($id) {
 
         if (!empty($id)) {
-            if ($this->EmailAddress->purgeGroup($id)) {
+            if ($this->EmailAddress->purgeUserGroup($id)) {
                 $this->Session->setFlash(__("Email address {$id} has been deleted!"), 'success');
             } else {
                 $this->Session->setFlash(__("Email address {$id} could not be deleted!"), 'error');

@@ -58,7 +58,7 @@ class UserPrivilegeFixture extends CakeTestFixture {
         array(
             'id' => '50a0edcf-30d4-479c-bdf2-05437f000007',
             'user_id' => '50a0edcf-d144-4470-ba4e-05437f000007',
-            'controller' => 'groups_controller',
+            'controller' => 'user_groups_controller',
             'action' => 'admin_index',
             'allowed' => 1,
             'created' => '2012-11-12 06:38:39',
@@ -102,7 +102,7 @@ class UserPrivilegeFixture extends CakeTestFixture {
         array(
             'id' => '50a0edd0-0644-4e3f-b236-05437f000007',
             'user_id' => '50a0edcf-d144-4470-ba4e-05437f000007',
-            'controller' => 'groups_controller',
+            'controller' => 'user_groups_controller',
             'action' => 'admin_delete',
             'allowed' => 1,
             'created' => '2012-11-12 06:38:40',
@@ -113,7 +113,7 @@ class UserPrivilegeFixture extends CakeTestFixture {
         array(
             'id' => '50a0edd0-178c-40c9-9aba-05437f000007',
             'user_id' => '50a0edcf-d144-4470-ba4e-05437f000007',
-            'controller' => 'groups_controller',
+            'controller' => 'user_groups_controller',
             'action' => 'admin_edit',
             'allowed' => 1,
             'created' => '2012-11-12 06:38:39',
@@ -124,7 +124,7 @@ class UserPrivilegeFixture extends CakeTestFixture {
         array(
             'id' => '50a0edd0-22d8-446b-be12-05437f000007',
             'user_id' => '50a0edcf-d144-4470-ba4e-05437f000007',
-            'controller' => 'groups_controller',
+            'controller' => 'user_groups_controller',
             'action' => 'admin_view',
             'allowed' => 1,
             'created' => '2012-11-12 06:38:39',
@@ -135,7 +135,7 @@ class UserPrivilegeFixture extends CakeTestFixture {
         array(
             'id' => '50a0edd0-2848-47c4-bf28-05437f000007',
             'user_id' => '50a0edcf-d144-4470-ba4e-05437f000007',
-            'controller' => 'groups_controller',
+            'controller' => 'user_groups_controller',
             'action' => 'admin_create',
             'allowed' => 1,
             'created' => '2012-11-12 06:38:40',

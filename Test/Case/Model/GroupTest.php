@@ -15,7 +15,7 @@
  * @author Jason D Snider <jason@jasonsnider.com>
  * @package test/User
  */
-App::uses('Group', 'Users.Model');
+App::uses('UserGroup', 'Users.Model');
 
 /**
  * Provides unit tests for user model
@@ -23,14 +23,14 @@ App::uses('Group', 'Users.Model');
  * @author Jason D Snider <jason@jasonsnider.com>
  * @package test/User
  */
-class GroupTest extends CakeTestCase {
+class UserGroupTest extends CakeTestCase {
 
     /**
      * Calls the fixtures needed by this test
      * @var array
      */
     public $fixtures = array(
-        'plugin.users.group'
+        'plugin.users.user_group'
     );
 
     /**
@@ -38,7 +38,7 @@ class GroupTest extends CakeTestCase {
      */
     public function setUp() {
         parent::setUp();
-        $this->Group = ClassRegistry::init('Users.Group');
+        $this->UserGroup = ClassRegistry::init('Users.UserGroup');
     }
 
     /**
@@ -46,7 +46,7 @@ class GroupTest extends CakeTestCase {
      */
     public function tearDown() {
         parent::tearDown();
-        unset($this->Group);
+        unset($this->UserGroup);
     }
 
     public function testPlaceholder() {

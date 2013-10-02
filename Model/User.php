@@ -79,8 +79,8 @@ class User extends UsersAppModel {
             ),
             'dependent' => true
         ),
-        'GroupUser' => array(
-            'className' => 'Users.GroupUser',
+        'UserGroupUser' => array(
+            'className' => 'Users.UserGroupUser',
             'foreignKey' => 'user_id',
             'dependent' => true
         ),
@@ -368,7 +368,7 @@ class User extends UsersAppModel {
                 ),
                 'fields' => array(),
                 'contain' => array(
-                    'GroupUser',
+                    'UserGroupUser',
                     'UserSetting'
                 )
             )
@@ -380,8 +380,8 @@ class User extends UsersAppModel {
         //Add the users settings
         $verifiedUser['User']['UserSetting'] = $user['UserSetting'];
         
-        //Add the id of each group to which the user is a member
-        $verifiedUser['User']['GroupUser'] = Set::extract('/GroupUser/./group_id', $user);
+        //Add the id of each user_group to which the user is a member
+        $verifiedUser['User']['UserGroupUser'] = Set::extract('/UserGroupUser/./user_group_id', $user);
         
         return empty($user) ? false : $verifiedUser;
     }

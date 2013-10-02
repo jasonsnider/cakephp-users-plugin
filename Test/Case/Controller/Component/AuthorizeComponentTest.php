@@ -33,9 +33,9 @@ class AuthorizeComponentTest extends ControllerTestCase {
     public $PagematronComponent = null;
     public $Controller = null;
     public $fixtures = array(
-        'plugin.users.group',
-        'plugin.users.group_privilege',
-        'plugin.users.group_user',
+        'plugin.users.user_group',
+        'plugin.users.user_group_privilege',
+        'plugin.users.user_group_user',
         'plugin.users.user',
         'plugin.users.user_privilege'
     );
@@ -76,6 +76,6 @@ class AuthorizeComponentTest extends ControllerTestCase {
     /**
      * Spotchecks a few of the retruned privileges
      */
-    public function testGroupPrivileges() {}
+    public function testUserGroupPrivileges() {}
 
 }

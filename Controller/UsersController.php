@@ -63,7 +63,7 @@ class UsersController extends UsersAppController {
      * @var array
      */
     public $uses = array(
-        'Users.Group',
+        'Users.UserGroup',
         'Users.User'
     );
 
@@ -204,26 +204,26 @@ class UsersController extends UsersAppController {
             }
 
             //GROUP MEMBERSHIP 
-            if (!empty($this->request->data['GroupUser'])) {
-                foreach ($this->request->data['GroupUser'] as $key => $values) {
+            if (!empty($this->request->data['UserGroupUser'])) {
+                foreach ($this->request->data['UserGroupUser'] as $key => $values) {
                     if (isset($values['id'])) {
 
                         if ($values['member'] == 0) {
-                            //If a previously set user group is set to undefined, delete it's record fron the system.
-                            $this->User->GroupUser->delete($values['id']);
+                            //If a previously set user user_group is set to undefined, delete it's record fron the system.
+                            $this->User->UserGroupUser->delete($values['id']);
                         }
                         //Nothing (more) to do, drop it from the array
-                        unset($this->request->data['GroupUser'][$key]);
+                        unset($this->request->data['UserGroupUser'][$key]);
                     } else {
 
-                        if (isset($values['group_id']) && isset($values['user_id'])) {
+                        if (isset($values['user_group_id']) && isset($values['user_id'])) {
                             //If no membership is set, remove it from the array
                             if ($values['member'] == 0) {
-                                unset($this->request->data['GroupUser'][$key]);
+                                unset($this->request->data['UserGroupUser'][$key]);
                             }
                             //Othewise it will get saved as relational data
                         } else {
-                            unset($this->request->data['GroupUser'][$key]);
+                            unset($this->request->data['UserGroupUser'][$key]);
                         }
                     }
                 }
@@ -243,8 +243,8 @@ class UsersController extends UsersAppController {
                 'User.id' => $id
             ),
             'contain' => array(
-                'GroupUser' => array(
-                    'Group'
+                'UserGroupUser' => array(
+                    'UserGroup'
                 ),
                 'UserPrivilege',
                 'EmailAddress'
@@ -252,9 +252,9 @@ class UsersController extends UsersAppController {
                 )
         );
 
-        $groups = $this->Group->fetchGroupsWithUser($this->data['GroupUser']);
+        $user_groups = $this->UserGroup->fetchUserGroupsWithUser($this->data['UserGroupUser']);
         $controllers = $this->Authorize->privileges($this->data['UserPrivilege']);
-        $this->set(compact('id', 'controllers', 'groups'));
+        $this->set(compact('id', 'controllers', 'user_groups'));
     }
 
     /**

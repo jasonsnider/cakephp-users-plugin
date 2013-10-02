@@ -28,22 +28,22 @@
     </fieldset>
 
     <fieldset>
-        <legend><?php echo __d('users', 'Groups'); ?></legend>
+        <legend><?php echo __d('users', 'UserGroups'); ?></legend>
         <?php
         $x = 0;
-        foreach ($groups as $group):
-            //Current groups
-            if (isset($group['id'])) {
+        foreach ($user_groups as $user_group):
+            //Current user_groups
+            if (isset($user_group['id'])) {
                 echo $this->Form->input(
-                        "GroupUser.{$x}.id", array(
+                        "UserGroupUser.{$x}.id", array(
                     'type' => 'hidden',
-                    'value' => $group['id']
+                    'value' => $user_group['id']
                         )
                 );
 
                 echo $this->Form->input(
-                        "GroupUser.{$x}.member", array(
-                    'label' => $group['Group']['name'],
+                        "UserGroupUser.{$x}.member", array(
+                    'label' => $user_group['UserGroup']['name'],
                     'type' => 'checkbox',
                     'checked' => true
                         )
@@ -52,21 +52,21 @@
 
                 //Not currently a member
                 echo $this->Form->input(
-                        "GroupUser.{$x}.member", array(
-                    'label' => $group['Group']['name'],
+                        "UserGroupUser.{$x}.member", array(
+                    'label' => $user_group['UserGroup']['name'],
                     'type' => 'checkbox'
                         )
                 );
 
                 echo $this->Form->input(
-                        "GroupUser.{$x}.group_id", array(
+                        "UserGroupUser.{$x}.user_group_id", array(
                     'type' => 'hidden',
-                    'value' => $group['Group']['id']
+                    'value' => $user_group['UserGroup']['id']
                         )
                 );
 
                 echo $this->Form->input(
-                        "GroupUser.{$x}.user_id", array(
+                        "UserGroupUser.{$x}.user_id", array(
                     'type' => 'hidden',
                     'value' => $this->data['User']['id']
                         )
@@ -90,13 +90,13 @@
                 $formKey = Inflector::camelize($key);
 
                 if (!empty($values)) {
-                    //If the group has either had this privilege alled of denied, set group_privileges.id.
+                    //If the user_group has either had this privilege alled of denied, set user_group_privileges.id.
                     echo $this->Form->input(
                             "UserPrivilege.{$controller}{$formKey}.id", array('value' => $values['id'], 'type' => 'hidden'));
                 }
 
                 echo $this->Form->input(
-                        "UserPrivilege.{$controller}{$formKey}.group_id", array('value' => $this->data['User']['id'], 'type' => 'hidden'));
+                        "UserPrivilege.{$controller}{$formKey}.user_group_id", array('value' => $this->data['User']['id'], 'type' => 'hidden'));
 
                 echo $this->Form->input(
                         "UserPrivilege.{$controller}{$formKey}.controller", array('value' => $controller, 'type' => 'hidden'));

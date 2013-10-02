@@ -21,19 +21,19 @@ App::uses('UsersAppModel', 'Users.Model');
  * @author Jason D Snider <jason@jasonsnider.com>
  * @package	Users
  */
-class Group extends AppModel {
+class UserGroup extends AppModel {
 
     /**
      * Holds the model name
      * @var string
      */
-    public $name = 'Group';
+    public $name = 'UserGroup';
 
     /**
      * Holds the name of the database table used by the model
      * @var string 
      */
-    public $useTable = 'groups';
+    public $useTable = 'user_groups';
 
     /**
      * Specifies the behaviors invoked by the model
@@ -60,65 +60,65 @@ class Group extends AppModel {
      * @var array
      */
     public $hasMany = array(
-        'GroupPrivilege' => array(
-            'className' => 'GroupPrivilege',
-            'foreignKey' => 'group_id',
+        'UserGroupPrivilege' => array(
+            'className' => 'UserGroupPrivilege',
+            'foreignKey' => 'user_group_id',
             'dependent' => true
         ),
-        'GroupUser' => array(
-            'className' => 'GroupUser',
-            'foreignKey' => 'group_id',
+        'UserGroupUser' => array(
+            'className' => 'UserGroupUser',
+            'foreignKey' => 'user_group_id',
             'dependent' => true
         )
     );
 
     /**
-     * Creates a new privilege group
+     * Creates a new privilege user_group
      * @param array $data
      * @return boolean
      */
-    public function createGroup($data) {
+    public function createUserGroup($data) {
 
         //Auto gen the slugs
-        $data['Group']['alias'] = Inflector::slug($data['Group']['name'], '_');
+        $data['UserGroup']['alias'] = Inflector::slug($data['UserGroup']['name'], '_');
 
-        $newGroup = $this->save($data);
-        return empty($newGroup) ? false : true;
+        $newUserGroup = $this->save($data);
+        return empty($newUserGroup) ? false : true;
     }
 
     /**
-     * Removes a privilege group and all child data from the system
+     * Removes a privilege user_group and all child data from the system
      * @param string $userId
      */
-    public function purgeGroup($userId) {
+    public function purgeUserGroup($userId) {
         return $this->delete($userId);
     }
 
     /**
-     * Merges Group into GroupUser for single user, the result is all possible groups with a corresponding GroupUser
-     * element for each group of which the target user is a member.
-     * @param array $groupUsers
+     * Merges UserGroup into UserGroupUser for single user, the result is all possible user_groups with a corresponding UserGroupUser
+     * element for each user_group of which the target user is a member.
+     * @param array $user_groupUsers
      * @return array
      */
-    public function fetchGroupsWithUser($groupUsers) {
+    public function fetchUserGroupsWithUser($user_groupUsers) {
 
-        $theGroups = array();
+        $theUserGroups = array();
 
-        $groups = $this->find(
+        $user_groups = $this->find(
                 'all', array(
             'contain' => array()
                 )
         );
 
-        foreach ($groups as $group) {
-            $theGroups[$group['Group']['alias']] = $group;
+        foreach ($user_groups as $user_group) {
+            $theUserGroups[$user_group['UserGroup']['alias']] = $user_group;
         }
 
-        foreach ($groupUsers as $groupUser) {
-            $theGroups[$groupUser['Group']['alias']] = $groupUser;
+        foreach ($user_groupUsers as $user_groupUser) {
+            $theUserGroups[$user_groupUser['UserGroup']['alias']] = $user_groupUser;
         }
 
-        return $theGroups;
+        return $theUserGroups;
     }
 
 }

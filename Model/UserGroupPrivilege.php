@@ -21,19 +21,19 @@ App::uses('UsersAppModel', 'Users.Model');
  * @author Jason D Snider <jason@jasonsnider.com>
  * @package	Users
  */
-class GroupPrivilege extends AppModel {
+class UserGroupPrivilege extends AppModel {
 
     /**
      * Holds the model name
      * @var string
      */
-    public $name = 'GroupPrivilege';
+    public $name = 'UserGroupPrivilege';
 
     /**
      * Holds the name of the database table used by the model
      * @var string 
      */
-    public $useTable = 'group_privileges';
+    public $useTable = 'user_group_privileges';
 
     /**
      * Specifies the behaviors invoked by the model
@@ -54,9 +54,9 @@ class GroupPrivilege extends AppModel {
      * @var array
      */
     public $belongsTo = array(
-        'Group' => array(
-            'className' => 'Users.Group',
-            'foreignKey' => 'group_id',
+        'UserGroup' => array(
+            'className' => 'Users.UserGroup',
+            'foreignKey' => 'user_group_id',
             'dependent' => true
         )
     );

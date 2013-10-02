@@ -73,7 +73,7 @@ class CtrlComponentTest extends ControllerTestCase {
         debug($controllers);
 
         $this->assertArrayHasKey('UsersController', $controllers);
-        $this->assertArrayHasKey('GroupsController', $controllers);
+        $this->assertArrayHasKey('UserGroupsController', $controllers);
         $this->assertArrayHasKey('PagesController', $controllers);
 
         $this->assertContains('index', $controllers['UsersController']);
@@ -87,11 +87,11 @@ class CtrlComponentTest extends ControllerTestCase {
         $this->assertContains('login', $controllers['UsersController']);
         $this->assertContains('logout', $controllers['UsersController']);
 
-        $this->assertContains('admin_index', $controllers['GroupsController']);
-        $this->assertContains('admin_create', $controllers['GroupsController']);
-        $this->assertContains('admin_view', $controllers['GroupsController']);
-        $this->assertContains('admin_edit', $controllers['GroupsController']);
-        $this->assertContains('admin_delete', $controllers['GroupsController']);
+        $this->assertContains('admin_index', $controllers['UserGroupsController']);
+        $this->assertContains('admin_create', $controllers['UserGroupsController']);
+        $this->assertContains('admin_view', $controllers['UserGroupsController']);
+        $this->assertContains('admin_edit', $controllers['UserGroupsController']);
+        $this->assertContains('admin_delete', $controllers['UserGroupsController']);
 
         $this->assertContains('display', $controllers['PagesController']);
     }

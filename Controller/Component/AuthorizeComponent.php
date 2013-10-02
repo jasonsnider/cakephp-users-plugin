@@ -103,7 +103,7 @@ class AuthorizeComponent extends Component {
 
         $this->controller = $controller;
         $this->UserPrivilege = ClassRegistry::init('UserPrivilege');
-        $this->GroupPrivilege = ClassRegistry::init('GroupPrivilege');
+        $this->UserGroupPrivilege = ClassRegistry::init('UserGroupPrivilege');
 
         if ($this->isAuthorized() === false) {
 
@@ -192,9 +192,9 @@ class AuthorizeComponent extends Component {
         $controller = Inflector::camelize($this->request->params['controller']) . 'Controller';
         $action = $this->request->params['action'];
         $userId = $this->Session->read('Auth.User.id');
-        $userGroupIds = $this->Session->read('Auth.User.GroupUser');
+        $userUserGroupIds = $this->Session->read('Auth.User.UserGroupUser');
 
-        //debug(compact('userId', 'action', 'controller', 'userGroupIds', 'authorizedIds'));       
+        //debug(compact('userId', 'action', 'controller', 'userUserGroupIds', 'authorizedIds'));       
         //Look up the priv
         $userPrivilege = $this->UserPrivilege->find(
                 'first', array(
@@ -210,17 +210,17 @@ class AuthorizeComponent extends Component {
                 )
         );
 
-        //Find any group privs
-        $userGroupPrivilege = $this->GroupPrivilege->find(
+        //Find any user_group privs
+        $userUserGroupPrivilege = $this->UserGroupPrivilege->find(
                 'first', array(
             'conditions' => array(
-                'GroupPrivilege.controller' => $controller,
-                'GroupPrivilege.action' => $action,
-                'GroupPrivilege.group_id' => $userGroupIds
+                'UserGroupPrivilege.controller' => $controller,
+                'UserGroupPrivilege.action' => $action,
+                'UserGroupPrivilege.user_group_id' => $userUserGroupIds
             ),
             'contain' => array(),
             'fields' => array(
-                'GroupPrivilege.allowed'
+                'UserGroupPrivilege.allowed'
             )
                 )
         );
@@ -228,14 +228,14 @@ class AuthorizeComponent extends Component {
         //initialize the allowed variable
         $allowed = false;
 
-        //Set allowed to true if any one group the user belongs to has the desired privilege.
-        if (!empty($userGroupPrivilege)) {
-            if ($userGroupPrivilege['GroupPrivilege']['allowed'] === true) {
+        //Set allowed to true if any one user_group the user belongs to has the desired privilege.
+        if (!empty($userUserGroupPrivilege)) {
+            if ($userUserGroupPrivilege['UserGroupPrivilege']['allowed'] === true) {
                 $allowed = true;
             }
         }
 
-        //If the user specifically has a privilege set, it will override the group setting
+        //If the user specifically has a privilege set, it will override the user_group setting
         if (!empty($userPrivilege)) {
 
             //The user specifically has a privilege denied
@@ -254,7 +254,7 @@ class AuthorizeComponent extends Component {
 
     /**
      * Returns an array of all controller actions merege with a users privileges for those actions
-     * @param array $privileges The privileges of a single group or user
+     * @param array $privileges The privileges of a single user_group or user
      * @return array 
      */
     public function privileges($privileges) {
