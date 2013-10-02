@@ -53,29 +53,29 @@ Router::connect(
 );
 
 Router::connect(
-    '/admin/groups', 
+    '/admin/user_groups', 
     array(
         'prefix' => 'admin',
         'plugin' => 'Users',
-        'controller' => 'Groups',
+        'controller' => 'UserGroups',
         'action' => 'index'
     )
 );
 
 Router::connect(
-    '/admin/groups/:action', 
+    '/admin/user_groups/:action', 
     array(
         'prefix' => 'admin',
         'plugin' => 'Users',
-        'controller' => 'Groups'
+        'controller' => 'UserGroups'
     )
 );
 
 Router::connect(
-    '/admin/groups/:action/*',
+    '/admin/user_groups/:action/*',
     array(
         'prefix' => 'admin',
         'plugin' => 'Users',
-        'controller' => 'Groups'
+        'controller' => 'UserGroups'
     )
 );
