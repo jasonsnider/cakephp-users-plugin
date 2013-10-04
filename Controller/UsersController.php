@@ -349,8 +349,40 @@ class UsersController extends UsersAppController {
 
         if (!empty($this->data)) {
             $username = $this->data['User']['username'];
-            if ($this->User->createPasswordReset($username)) {
+            
+            $user = $this->User->find(
+                'first',
+                array(
+                    'conditions'=>array(
+                        'User.username'=>$username, 
+                    ),
+                    'contain'=>array(
+                        'EmailAddress'=>array()
+                    )
+                )
+            );
+            
+            $passwordResetConfirmation = $this->User->createPasswordReset($username);
+            
+            if ($passwordResetConfirmation) {
 
+           
+                $serverName = env('SERVER_NAME');
+                $entityName = 'The Parbake Project';
+
+                $email = new CakeEmail('passwordReset');
+                $email->to($user['EmailAddress'][0]['email'])
+                    ->viewVars(
+                        array(
+                            'entityName' => $entityName,
+                            'serverName' => $serverName,
+                            'username' => $username,
+                            'confirmation' => $passwordResetConfirmation
+                        )
+                    )
+                    ->send();
+            
+                
                 $this->Session->setFlash(
                     __("We've sent password reset instructions to your email address."),
                     'success'

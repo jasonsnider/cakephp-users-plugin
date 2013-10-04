@@ -403,4 +403,52 @@ class UserTest extends CakeTestCase {
         $this->assertEquals($results['User']['username'], 'jason');
     }
 
+    /**
+     * 
+     */
+    public function testCreatePasswordResetCreatesAUuid(){
+        
+        //Test with the user jason
+        $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
+        
+        $this->User->createPasswordReset($userId);
+        
+        $userWithConfirmation = $this->User->find(
+            'first',
+            array(
+                'conditions'=>array(
+                    'User.username'=>'jason'
+                ),
+                'contain'=>array()
+            )
+        );
+        
+        //We will start by simply checking fo the required string length.
+        $this->assertEqual(strlen($userWithConfirmation['User']['password_confirmation']), 36);
+        
+    }
+    
+    /**
+     * 
+     */
+    public function testCreatePasswordResetCreatesAnExpiry(){
+        
+        //Test with the user jason
+        $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
+        
+        $this->User->createPasswordReset($userId);
+        
+        $userWithConfirmation = $this->User->find(
+            'first',
+            array(
+                'conditions'=>array(
+                    'User.username'=>'jason'
+                ),
+                'contain'=>array()
+            )
+        );
+        
+        //We will start by simply checking fo the required string length.
+        $this->assertEqual(strlen($userWithConfirmation['User']['password_confirmation_expiry']), 19);
+    }
 }

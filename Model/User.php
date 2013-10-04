@@ -394,57 +394,23 @@ class User extends UsersAppModel {
      * 
      * Returns true if the password reset request data was saved successfully.
      * 
-     * @param string $username The username for which we want to request a change of password.
-     * @return boolean
+     * @param string $id
+     * @return boolean|string
      */
-    public function createPasswordReset($username) {
-        
-        //Create a function for verifiable users
-        $user = $this->find(
-            'first', 
-            array(
-                'conditions' => array(
-                    'User.username' => $username
-                ),
-                'contain' => array(
-                    'EmailAddress'
-                )
-            )
-        );
+    public function createPasswordReset($id) {
+        $confirmation =  Random::uuid();
+        $data = array();
+        $data['User']['id'] = $id;
+        $data['User']['password_confirmation_expiry'] = date('Y-m-d H:i:s', strtotime('+24 hours'));
+        $data['User']['password_confirmation'] = $confirmation;
 
-        if (!empty($user)) {
-
-            $data = array();
-            $data['User']['id'] = $user['User']['id'];
-            $data['User']['password_confirmation_expiry'] = date('Y-m-d H:i:s', strtotime('+24 hours'));
-            $data['User']['password_confirmation'] = String::uuid();
-
-            if ($this->save($data)) {
-
-                $serverName = env('SERVER_NAME');
-                $entityName = 'The Parbake Project';
-
-                $email = new CakeEmail('passwordReset');
-                $email->to($user['EmailAddress'][0]['email'])
-                    ->viewVars(
-                        array(
-                            'entityName' => $entityName,
-                            'serverName' => $serverName,
-                            'username' => $username,
-                            'confirmation' => $data['User']['password_confirmation']
-                        )
-                    )
-                    ->send();
-
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
+        if($this->save($data)){
+            return $confirmation;
         }
+        
+        return false;
     }
-
+    
     /**
      * Returns true if a password_confirmation is (still) valid.
      * 
