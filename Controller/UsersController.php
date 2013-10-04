@@ -40,6 +40,7 @@ class UsersController extends UsersAppController {
 
     /**
      * Called before action
+     * @return void
      */
     public function beforeFilter() {
         parent::beforeFilter();
@@ -69,6 +70,7 @@ class UsersController extends UsersAppController {
 
     /**
      * Displays an index of all users
+     * @return void
      */
     public function index() {
 
@@ -83,6 +85,7 @@ class UsersController extends UsersAppController {
 
     /**
      * A method for creating a new user in the system
+     * @return void
      */
     public function create() {
 
@@ -99,6 +102,7 @@ class UsersController extends UsersAppController {
     /**
      * A method for creating a new user in the system
      * @param string $id The id of the user to be viewed
+     * @return void
      */
     public function view($id) {
 
@@ -121,6 +125,7 @@ class UsersController extends UsersAppController {
     /**
      * Allows a user to update their own data
      * @param string $id The id of the user to be edited
+     * @return void
      */
     public function edit($id) {
 
@@ -154,6 +159,7 @@ class UsersController extends UsersAppController {
 
     /**
      * Displays an index of all users
+     * @return void
      */
     public function admin_index() {
 
@@ -169,6 +175,7 @@ class UsersController extends UsersAppController {
     /**
      * A method for creating a new user in the system
      * @param string $id
+     * @return void
      */
     public function admin_view($id) {
 
@@ -187,6 +194,7 @@ class UsersController extends UsersAppController {
     /**
      * Allows an admin to update a users record
      * @param string $id
+     * @return void
      */
     public function admin_edit($id) {
 
@@ -260,6 +268,7 @@ class UsersController extends UsersAppController {
     /**
      * A method for deleting a user account
      * @param string $id
+     * @return void
      */
     public function admin_delete($id) {
 
@@ -276,6 +285,7 @@ class UsersController extends UsersAppController {
 
     /**
      * Provides a login action
+     * @return void
      */
     public function login() {
 
@@ -334,6 +344,7 @@ class UsersController extends UsersAppController {
 
     /**
      * Provides a logout action
+     * @return void
      */
     public function logout() {
         //$this->Session->destroy();
@@ -343,6 +354,7 @@ class UsersController extends UsersAppController {
 
     /**
      * Allows a user to request that their password be reset
+     * @return void
      */
     public function reset_password_request() {
 
@@ -364,9 +376,8 @@ class UsersController extends UsersAppController {
             
             $passwordResetConfirmation = $this->User->createPasswordReset($username);
             
-            if ($passwordResetConfirmation) {
-
-           
+            if($passwordResetConfirmation){
+                
                 $serverName = env('SERVER_NAME');
                 $entityName = 'The Parbake Project';
 
@@ -400,6 +411,7 @@ class UsersController extends UsersAppController {
      * @param string $username
      * @param string $password_confirmation
      * @return mixed Halts excecution of the action on a redirect
+     * @return void
      */
     public function reset_password($username = null, $password_confirmation = null) {
         $errors = null;
