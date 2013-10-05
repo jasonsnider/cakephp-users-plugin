@@ -1,7 +1,7 @@
 <?php echo $this->element('sidebar'); ?>
 <div class="form">
     <p>If you haven't received instructions for reseting your password, check your email's spam
-    and junk folder, or try <a href=\"/users/reset_password_request\">resending your request.</a></p>
+    and junk folder, or try <a href="/users/reset_password_request">resending your request.</a></p>
     
     <h1><?php echo __d('users', 'Reset Password'); ?></h1>
     <?php
