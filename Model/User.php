@@ -452,12 +452,12 @@ class User extends UsersAppModel {
     public function resetPassword($confirmedUserId, $data) {
 
         //Verify the user id
-        if (!$confirmedUserId) {
+        if (strlen($confirmedUserId) != 36) {
             return false;
         }
 
         //Verify the user id
-        if (empty($data[$this->alias]['id'])) {
+        if (strlen($data[$this->alias]['id']) != 36) {
             return false;
         }
 
@@ -473,9 +473,9 @@ class User extends UsersAppModel {
         //Change the password
         if ($this->save($data)) {
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
 
 }

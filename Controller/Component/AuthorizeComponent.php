@@ -288,7 +288,7 @@ class AuthorizeComponent extends Component {
         $sessionUserId = $this->Session->read('Auth.User.id');
         if ($sessionUserId != $userId) {
             $this->Session->setFlash(__($message));
-            return $this->controller->redirect("/");
+            return $this->controller->redirect($this->Auth->redirect());
         } else {
             return true;
         }
