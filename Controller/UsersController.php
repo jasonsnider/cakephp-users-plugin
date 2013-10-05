@@ -140,16 +140,16 @@ class UsersController extends UsersAppController {
         }
 
         $this->request->data = $this->User->find(
-                'first', array(
-            'conditions' => array(
-                'User.id' => $id
-            ),
-            'contain' => array(
-                'EmailAddress',
-                'UserPrivilege',
-                'UserSetting'
-            )
+            'first', array(
+                'conditions' => array(
+                    'User.id' => $id
+                ),
+                'contain' => array(
+                    'EmailAddress',
+                    'UserPrivilege',
+                    'UserSetting'
                 )
+            )
         );
 
         $visibilities = $this->User->getList($this->User->visibilities);
@@ -180,12 +180,12 @@ class UsersController extends UsersAppController {
     public function admin_view($id) {
 
         $user = $this->User->find(
-                'first', array(
-            'conditions' => array(
-                'User.id' => $id
-            ),
-            'contain' => array()
-                )
+            'first', array(
+                'conditions' => array(
+                    'User.id' => $id
+                ),
+                'contain' => array()
+            )
         );
 
         $this->set(compact('user', 'id'));
@@ -246,18 +246,18 @@ class UsersController extends UsersAppController {
         }
 
         $this->request->data = $this->User->find(
-                'first', array(
-            'conditions' => array(
-                'User.id' => $id
-            ),
-            'contain' => array(
-                'UserGroupUser' => array(
-                    'UserGroup'
+            'first', array(
+                'conditions' => array(
+                    'User.id' => $id
                 ),
-                'UserPrivilege',
-                'EmailAddress'
-            )
+                'contain' => array(
+                    'UserGroupUser' => array(
+                        'UserGroup'
+                    ),
+                    'UserPrivilege',
+                    'EmailAddress'
                 )
+            )
         );
 
         $user_groups = $this->UserGroup->fetchUserGroupsWithUser($this->request->data['UserGroupUser']);
