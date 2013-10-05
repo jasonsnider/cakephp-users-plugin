@@ -467,7 +467,7 @@ class User extends UsersAppModel {
         }
 
         //Reset the confirmation fields
-        $data[$this->alias]['password_confirmation_expiry'] = '0000-00-00 00:00:00';
+        $data[$this->alias]['password_confirmation_expiry'] = null;
         $data[$this->alias]['password_confirmation'] = null;
 
         //Change the password

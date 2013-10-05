@@ -358,7 +358,6 @@ class UsersController extends UsersAppController {
      */
     public function reset_password_request() {
 
-
         if (!empty($this->data)) {
             $username = $this->data['User']['username'];
             
@@ -392,7 +391,6 @@ class UsersController extends UsersAppController {
                         )
                     )
                     ->send();
-            
                 
                 $this->Session->setFlash(
                     __("We've sent password reset instructions to your email address."),
