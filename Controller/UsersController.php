@@ -89,8 +89,8 @@ class UsersController extends UsersAppController {
      */
     public function create() {
 
-        if (!empty($this->data)) {
-            if ($this->User->createUser($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->User->createUser($this->request->data)) {
                 $this->Session->setFlash(__('The record has been created!'), 'success');
                 $this->redirect('/users/login/');
             } else {
@@ -131,15 +131,15 @@ class UsersController extends UsersAppController {
 
         $this->Authorize->me($id);
 
-        if (!empty($this->data)) {
-            if ($this->User->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The record has been updated!'), 'success');
             } else {
                 $this->Session->setFlash(__('The record could not be updated!'), 'error');
             }
         }
 
-        $this->data = $this->User->find(
+        $this->request->data = $this->User->find(
                 'first', array(
             'conditions' => array(
                 'User.id' => $id
@@ -198,10 +198,10 @@ class UsersController extends UsersAppController {
      */
     public function admin_edit($id) {
 
-        if (!empty($this->data)) {
-            //debug($this->data);
+        if (!empty($this->request->data)) {
+            //debug($this->request->data);
             //USER PRIVILEGES
-            foreach ($this->data['UserPrivilege'] as $key => $values) {
+            foreach ($this->request->data['UserPrivilege'] as $key => $values) {
                 if ($values['allowed'] == 2) {
                     if (isset($values['id'])) {
                         //If a previously set priv is set to undefined, delete it's record fron the system.
@@ -238,14 +238,14 @@ class UsersController extends UsersAppController {
             }
 
             //Save the data
-            if ($this->User->saveAll($this->data)) {
+            if ($this->User->saveAll($this->request->data)) {
                 $this->Session->setFlash(__('The record has been updated!'), 'success');
             } else {
                 $this->Session->setFlash(__('The record could not be updated!'), 'error');
             }
         }
 
-        $this->data = $this->User->find(
+        $this->request->data = $this->User->find(
                 'first', array(
             'conditions' => array(
                 'User.id' => $id
@@ -260,8 +260,8 @@ class UsersController extends UsersAppController {
                 )
         );
 
-        $user_groups = $this->UserGroup->fetchUserGroupsWithUser($this->data['UserGroupUser']);
-        $controllers = $this->Authorize->privileges($this->data['UserPrivilege']);
+        $user_groups = $this->UserGroup->fetchUserGroupsWithUser($this->request->data['UserGroupUser']);
+        $controllers = $this->Authorize->privileges($this->request->data['UserPrivilege']);
         $this->set(compact('id', 'controllers', 'user_groups'));
     }
 
@@ -289,16 +289,16 @@ class UsersController extends UsersAppController {
      */
     public function login() {
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
 
             //Do a cursory check for empty fields
             $stop = false;
-            if (empty($this->data['User']['username'])) {
+            if (empty($this->request->data['User']['username'])) {
                 $this->User->validationErrors['username'] = 'Please enter your username.';
                 $stop = true;
             }
 
-            if (empty($this->data['User']['password'])) {
+            if (empty($this->request->data['User']['password'])) {
                 $this->User->validationErrors['password'] = 'Please enter your password.';
                 $stop = true;
             }
@@ -309,13 +309,13 @@ class UsersController extends UsersAppController {
             }
 
             //Based on the username, get the user salt
-            $salt = $this->User->fetchUserSalt($this->data['User']['username']);
+            $salt = $this->User->fetchUserSalt($this->request->data['User']['username']);
             if ($salt) {
 
                 //If we found a valid salt value, hash it with the user submtted password and verify the credentials
                 //against a database record
                 $verifiedUserId = $this->User->verifyUser(
-                        $this->data['User']['username'], $this->data['User']['password'], $salt
+                        $this->request->data['User']['username'], $this->request->data['User']['password'], $salt
                 );
 
                 if ($verifiedUserId) {
@@ -358,8 +358,9 @@ class UsersController extends UsersAppController {
      */
     public function reset_password_request() {
 
-        if (!empty($this->data)) {
-            $username = $this->data['User']['username'];
+        if (!empty($this->request->data)) {
+            
+            $username = $this->request->data['User']['username'];
             
             $user = $this->User->find(
                 'first',
@@ -412,14 +413,12 @@ class UsersController extends UsersAppController {
      * @return void
      */
     public function reset_password($username = null, $password_confirmation = null) {
-        $errors = null;
         $message = null;
 
+        if (!empty($this->request->data)) {
 
-        if (!empty($this->data)) {
-
-            $username = $this->data['User']['username'];
-            $password_confirmation = $this->data['User']['password_confirmation'];
+            $username = $this->request->data['User']['username'];
+            $password_confirmation = $this->request->data['User']['password_confirmation'];
             $confirm = $this->User->verfiyPasswordReset($username, $password_confirmation);
 
             //Only proceed if a valid confirmation has been passed
@@ -428,7 +427,7 @@ class UsersController extends UsersAppController {
                 $this->request->data['User']['id'] = $confirm;
 
                 //Now try and reset the password
-                if ($this->User->resetPassword($confirm, $this->data)) {
+                if ($this->User->resetPassword($confirm, $this->request->data)) {
                     $this->Session->setFlash(__('Your password has been reset!'), 'success');
                     return $this->redirect('/users/login');
                 } else {
