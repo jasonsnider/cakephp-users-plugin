@@ -1,6 +1,9 @@
 <?php echo $this->element('sidebar'); ?>
 <div class="form">
     <h1><?php echo __d('users', 'Admin :: Edit User'); ?></h1>
+        
+    <?php echo $this->element('Users/admin'); ?>
+
     <?php echo $this->Form->create('User'); ?>
     <fieldset>
         <legend><?php echo __d('users', 'User Details'); ?></legend>
@@ -128,14 +131,5 @@
     </fieldset>
 
     <?php echo $this->Form->end(__d('users', 'Submit')); ?>
-
-    <div class="menu">
-        <ul>
-            <li><?php echo $this->Html->link('Index', '/admin/users'); ?></li>
-            <li><?php echo $this->Html->link('Create', '/admin/users/create'); ?></li>
-            <li><?php echo $this->Html->link('Edit', "/admin/users/view/{$id}"); ?></li>
-            <li><?php echo $this->Html->link('Delete', "/admin/users/delete/{$id}", null, 'Are you sure?'); ?></li>
-        </ul>
-    </div>
 
 </div>

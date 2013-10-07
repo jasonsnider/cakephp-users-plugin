@@ -91,6 +91,34 @@ class EmailAddressesController extends UsersAppController {
             $this->request->data['EmailAddress'] = compact('model', 'model_id');
         }
     }
+    
+    /**
+     * Provides a UI for creating an email address against any model
+     * @param string $id
+     */
+    public function admin_edit($id) {
+
+        $emailAddress = $this->EmailAddress->find(
+            'id',
+            array(
+                'conditions'=>array(
+                    'EmailAddress.id'=>$id
+                )
+            )
+        );
+        
+        if (!empty($this->data)) {
+            if ($this->EmailAddress->saveAll($this->data)) {
+                $this->Session->setFlash(__('Your email address has been saved!'), 'success');
+                $this->redirect("/admin/email_addresses/edit/{$id}");
+            } else {
+                $this->Session->setFlash(__('Your email address could not be saved!'), 'error');
+            }
+        }else{
+            $this->request->data = $emailAddress;
+        }
+        
+    }
 
     /**
      * A method for deleting a user_group
