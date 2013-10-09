@@ -79,3 +79,31 @@ Router::connect(
         'controller' => 'UserGroups'
     )
 );
+
+Router::connect(
+    '/admin/email_addresses', 
+    array(
+        'prefix' => 'admin',
+        'plugin' => 'Users',
+        'controller' => 'EmailAddresses',
+        'action' => 'index'
+    )
+);
+
+Router::connect(
+    '/admin/email_addresses/:action', 
+    array(
+        'prefix' => 'admin',
+        'plugin' => 'Users',
+        'controller' => 'EmailAddresses'
+    )
+);
+
+Router::connect(
+    '/admin/email_addresses/:action/*',
+    array(
+        'prefix' => 'admin',
+        'plugin' => 'Users',
+        'controller' => 'EmailAddresses'
+    )
+);
