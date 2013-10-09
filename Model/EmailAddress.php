@@ -41,7 +41,7 @@ class EmailAddress extends AppModel {
      */
     public $actsAs = array(
         'Utilities.Loggable',
-        'Users.Scrubable' => array(
+        'Utilities.Scrubable' => array(
             'Filters' => array(
                 'trim' => '*',
                 'noHtml' => '*'
