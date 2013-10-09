@@ -1,6 +1,14 @@
 <?php echo $this->element('sidebar'); ?>
 <div class="form">
     <h1><?php echo __d('user_groups', 'Admin :: Edit UserGroup'); ?></h1>
+    <div class="menu">
+        <ul>
+            <li><?php echo $this->Html->link('Index', '/admin/user_groups'); ?></li>
+            <li><?php echo $this->Html->link('Create', '/admin/user_groups/create'); ?></li>
+            <li><?php echo $this->Html->link('Edit', "/admin/user_groups/view/{$id}"); ?></li>
+            <li><?php echo $this->Html->link('Delete', "/admin/user_groups/delete/{$id}", null, 'Are you sure?'); ?></li>
+        </ul>
+    </div>
     <?php echo $this->Form->create('UserGroup'); ?>
     <fieldset>
         <legend><?php echo __d('user_groups', 'UserGroup Details'); ?></legend>
@@ -61,14 +69,5 @@
     </fieldset>
 
     <?php echo $this->Form->end(__d('user_groups', 'Submit')); ?>
-
-    <div class="menu">
-        <ul>
-            <li><?php echo $this->Html->link('Index', '/admin/user_groups'); ?></li>
-            <li><?php echo $this->Html->link('Create', '/admin/user_groups/create'); ?></li>
-            <li><?php echo $this->Html->link('Edit', "/admin/user_groups/view/{$id}"); ?></li>
-            <li><?php echo $this->Html->link('Delete', "/admin/user_groups/delete/{$id}", null, 'Are you sure?'); ?></li>
-        </ul>
-    </div>
 
 </div>

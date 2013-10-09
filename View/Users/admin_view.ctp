@@ -2,6 +2,7 @@
 
 <div class="view">
     <h1><?php echo __d('users', 'Admin :: View'); ?></h1>
+    <?php echo $this->element('Users/admin'); ?>
     <dl>
 
         <dt><?php echo __d('users', 'ID'); ?></dt>
@@ -23,14 +24,5 @@
         <dd><?php echo $user['User']['modified']; ?>&nbsp;</dd>
 
     </dl>
-
-    <div class="menu">
-        <ul>
-            <li><?php echo $this->Html->link('Index', '/admin/users'); ?></li>
-            <li><?php echo $this->Html->link('Create', '/admin/users/create'); ?></li>
-            <li><?php echo $this->Html->link('Edit', "/admin/users/edit/{$id}"); ?></li>
-            <li><?php echo $this->Html->link('Delete', "/admin/users/delete/{$id}", null, 'Are you sure?'); ?></li>
-        </ul>
-    </div>
 
 </div>

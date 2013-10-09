@@ -38,41 +38,46 @@
             //Current user_groups
             if (isset($user_group['id'])) {
                 echo $this->Form->input(
-                        "UserGroupUser.{$x}.id", array(
-                    'type' => 'hidden',
-                    'value' => $user_group['id']
-                        )
+                    "UserGroupUser.{$x}.id", 
+                    array(
+                        'type' => 'hidden',
+                        'value' => $user_group['id']
+                    )
                 );
 
                 echo $this->Form->input(
-                        "UserGroupUser.{$x}.member", array(
-                    'label' => $user_group['UserGroup']['name'],
-                    'type' => 'checkbox',
-                    'checked' => true
-                        )
+                    "UserGroupUser.{$x}.member", 
+                    array(
+                        'label' => $user_group['UserGroup']['name'],
+                        'type' => 'checkbox',
+                        'checked' => true
+                    )
                 );
             } else {
 
                 //Not currently a member
                 echo $this->Form->input(
-                        "UserGroupUser.{$x}.member", array(
-                    'label' => $user_group['UserGroup']['name'],
-                    'type' => 'checkbox'
-                        )
+                    "UserGroupUser.{$x}.member", 
+                    array(
+                        'label' => $user_group['UserGroup']['name'],
+                        'type' => 'checkbox'
+                    )
                 );
 
                 echo $this->Form->input(
-                        "UserGroupUser.{$x}.user_group_id", array(
-                    'type' => 'hidden',
-                    'value' => $user_group['UserGroup']['id']
-                        )
+                    "UserGroupUser.{$x}.user_group_id", 
+                    array(
+                        'type' => 'hidden',
+                        'value' => $user_group['UserGroup']['id']
+                    )
                 );
 
                 echo $this->Form->input(
-                        "UserGroupUser.{$x}.user_id", array(
-                    'type' => 'hidden',
-                    'value' => $this->data['User']['id']
-                        )
+                    "UserGroupUser.{$x}.user_id", 
+                    array(
+                        'type' => 'hidden',
+                        'value' => $this->data['User']['id']
+                    )
                 );
             }
 
@@ -80,7 +85,7 @@
         endforeach;
         ?>
     </fieldset>
-
+    
     <fieldset>
         <legend><?php echo __d('users', 'User Privileges'); ?></legend>
         <?php
@@ -114,16 +119,17 @@
                 }
 
                 echo $this->Form->input(
-                        "UserPrivilege.{$controller}{$formKey}.allowed", array(
-                    'legend' => $formKey,
-                    'type' => 'radio',
-                    'options' => array(
-                        0 => 'deny',
-                        1 => 'allow',
-                        2 => 'undefined'
-                    ),
-                    'value' => $allowed
-                        )
+                    "UserPrivilege.{$controller}{$formKey}.allowed", 
+                        array(
+                        'legend' => $formKey,
+                        'type' => 'radio',
+                        'options' => array(
+                            0 => 'deny',
+                            1 => 'allow',
+                            2 => 'undefined'
+                        ),
+                        'value' => $allowed
+                    )
                 );
             }
         }

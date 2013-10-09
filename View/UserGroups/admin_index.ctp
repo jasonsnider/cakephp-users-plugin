@@ -1,6 +1,11 @@
 <?php echo $this->element('sidebar'); ?>
 <div class="index">
     <h1><?php echo __d('user_group', 'Admin :: UserGroups'); ?></h1>
+    <div class="menu">
+        <ul>
+            <li><?php echo $this->Html->link('Create', '/admin/user_groups/create'); ?></li>
+        </ul>
+    </div>
     <table>
         <caption>
             <?php
@@ -38,9 +43,4 @@
         <?php endforeach; ?>
     </table>
     <?php echo $this->element('pager'); ?>
-    <div class="menu">
-        <ul>
-            <li><?php echo $this->Html->link('Create', '/admin/user_groups/create'); ?></li>
-        </ul>
-    </div>
 </div>

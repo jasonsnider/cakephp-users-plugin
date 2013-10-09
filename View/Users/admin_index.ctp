@@ -1,6 +1,11 @@
 <?php echo $this->element('sidebar'); ?>
 <div class="index">
     <h1><?php echo __d('users', 'Admin :: Users'); ?></h1>
+    <div class="menu">
+        <ul>
+            <li><?php echo $this->Html->link('Create', '/admin/users/create'); ?></li>
+        </ul>
+    </div>
     <table>
         <caption>
             <?php
@@ -27,7 +32,7 @@
                             'view', 
                             array(
                                 'admin'=>true,
-                                'plugin'=>'users',
+                                'plugin'=>false,
                                 'controller'=>'users',
                                 'action'=>'admin_view',
                                 0=>$user['User']['id']
@@ -49,9 +54,4 @@
         <?php endforeach; ?>
     </table>
     <?php echo $this->element('pager'); ?>
-    <div class="menu">
-        <ul>
-            <li><?php echo $this->Html->link('Create', '/admin/users/create'); ?></li>
-        </ul>
-    </div>
 </div>
