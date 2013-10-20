@@ -417,7 +417,13 @@ class UsersController extends UsersAppController {
         
         if (!empty($this->request->data)) {
 
-            $this->PasswordReset->reset($this->request->data['User']);
+            if($this->PasswordReset->reset($this->request->data['User'])){
+                $this->Session->setFlash(__('Your password has been reset, you may now login.'), 'successs');
+                $this->redirect('/users/login/');
+                exit;
+            }else{
+                $this->Session->setFlash(__('Your password could not be reset.'), 'error');
+            }
 
         } else {
             $this->request->data['User'] = compact('username', 'password_confirmation');
