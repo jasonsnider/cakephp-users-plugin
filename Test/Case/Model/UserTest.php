@@ -8,7 +8,7 @@
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
- *
+ *c
  * @copyright Copyright 2012, Jason D Snider. (http://jasonsnider.com)
  * @link http://jasonsnider.com
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -402,118 +402,4 @@ class UserTest extends CakeTestCase {
         $this->assertContains('50a1c275-8c38-477d-8682-0f247f000007', $results['User']['UserGroupUser']);
         $this->assertEquals($results['User']['username'], 'jason');
     }
-
-    /**
-     * 
-     */
-    public function testCreatePasswordResetCreatesAUuid(){
-        
-        //Test with the user jason
-        $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
-        
-        $this->User->createPasswordReset($userId);
-        
-        $userWithConfirmation = $this->User->find(
-            'first',
-            array(
-                'conditions'=>array(
-                    'User.username'=>'jason'
-                ),
-                'contain'=>array()
-            )
-        );
-        
-        //We will start by simply checking fo the required string length.
-        $this->assertEqual(strlen($userWithConfirmation['User']['password_confirmation']), 36);
-        
-    }
-    
-    /**
-     * 
-     */
-    public function testCreatePasswordResetCreatesAnExpiry(){
-        
-        //Test with the user jason
-        $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
-        
-        $this->User->createPasswordReset($userId);
-        
-        $userWithConfirmation = $this->User->find(
-            'first',
-            array(
-                'conditions'=>array(
-                    'User.username'=>'jason'
-                ),
-                'contain'=>array()
-            )
-        );
-        
-        //We will start by simply checking fo the required string length.
-        $this->assertEqual(strlen($userWithConfirmation['User']['password_confirmation_expiry']), 19);
-    }
-    
-    public function testResetPasswordFailsIfAPlausableUserIdIsNotPassedAsConfirmedUserId(){
-        
-        $userId1 = String::uuid();
-        $userId2 = String::uuid();
-        
-        $reset = $this->User->resetPassword(null, array());
-        $this->assertFalse($reset);
-        
-        $reset1 = $this->User->resetPassword($userId1, array('User'=>array('id'=>null)));
-        $this->assertFalse($reset1);
-        
-        $reset2 = $this->User->resetPassword($userId1, array('User'=>array('id'=>$userId2)));
-        $this->assertFalse($reset2);
-    }
-    
-    public function testResetingAPasswordResetsThePasswordConfirmationFields(){
-        
-        //Test with the user jason
-        $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
-        $username = 'jason';
-        
-        //Create a password reset using the record for the user jason
-        $password_confirmation = $this->User->createPasswordReset($userId);
-        
-        /*
-        $user = $this->User->find(
-            'first',
-            array(
-                'conditions'=>array(
-                    'User.id'=>$userId
-                ),
-                'contain'=>array()
-            )
-        );
-        debug($user);
-        */
-        
-        //Verify the password confirmation and get the confirmation strin
-        $confirm = $this->User->verfiyPasswordReset($username, $password_confirmation);
-        
-        //Build a faux user data array
-        $data['User']['id'] = $userId;
-        $data['User']['username'] = $username;
-        $data['User']['password'] = 'password1';
-        $data['User']['verify_password'] = 'password1';
-        
-        //Perform a password rest
-        $this->User->resetPassword($confirm, $data);
-        
-        //Look up the user record jason to confirm the cofnirmation fields have been reset 
-        $user = $this->User->find(
-            'first',
-            array(
-                'conditions'=>array(
-                    'User.id'=>$userId
-                ),
-                'contain'=>array()
-            )
-        );
-        
-        $this->assertNull($user['User']['password_confirmation']);
-        $this->assertNull($user['User']['password_confirmation_expiry']);
-    }
-    
 }

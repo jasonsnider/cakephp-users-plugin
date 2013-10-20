@@ -65,7 +65,8 @@ class UsersController extends UsersAppController {
      */
     public $uses = array(
         'Users.UserGroup',
-        'Users.User'
+        'Users.User',
+        'Users.PasswordReset'
     );
 
     /**
@@ -368,14 +369,17 @@ class UsersController extends UsersAppController {
                     'conditions'=>array(
                         'User.username'=>$username, 
                     ),
+                    'fields'=>array(
+                        'User.id'
+                    ),
                     'contain'=>array(
                         'EmailAddress'=>array()
                     )
                 )
             );
             
-            $passwordResetConfirmation = $this->User->createPasswordReset($username);
-            
+            $passwordResetConfirmation = $this->PasswordReset->createPasswordReset($user['User']['id']);
+
             if($passwordResetConfirmation){
                 
                 $serverName = env('SERVER_NAME');
@@ -400,48 +404,21 @@ class UsersController extends UsersAppController {
 
                 $this->redirect("/users/reset_password/{$username}");
             } else {
-                $this->Session->setFlash(__('Your request could not be completed!'), 'success');
+                $this->Session->setFlash(__('We could not complete your request'), 'success');
             }
         }
     }
 
     /**
      * Provided the UI for a user to enter and reset their password
-     * @param string $username
-     * @param string $password_confirmation
-     * @return mixed Halts excecution of the action on a redirect
      * @return void
      */
-    public function reset_password($username = null, $password_confirmation = null) {
-        $message = null;
-
+    public function reset_password() {
+        
         if (!empty($this->request->data)) {
 
-            $username = $this->request->data['User']['username'];
-            $password_confirmation = $this->request->data['User']['password_confirmation'];
-            $confirm = $this->User->verfiyPasswordReset($username, $password_confirmation);
+            $this->PasswordReset->reset($this->request->data['User']);
 
-            //Only proceed if a valid confirmation has been passed
-            if ($confirm) {
-
-                $this->request->data['User']['id'] = $confirm;
-
-                //Now try and reset the password
-                if ($this->User->resetPassword($confirm, $this->request->data)) {
-                    $this->Session->setFlash(__('Your password has been reset!'), 'success');
-                    return $this->redirect('/users/login');
-                } else {
-                    $this->Session->setFlash(__('Please correct the errors below!'), 'error');
-                }
-            } else {
-                $message = __('The password confirmation has either expired or does not exist!')
-                        . __("<p><small>Please re-renter the code or try <a href=\"/users/reset_password_request\">"
-                                . "request a new one</a>.</small></p>");
-
-                $this->Session->setFlash($message);
-
-                $this->User->validationErrors['password_confirmation'] = 'Something isn\'t right here.';
-            }
         } else {
             $this->request->data['User'] = compact('username', 'password_confirmation');
         }

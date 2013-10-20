@@ -192,11 +192,24 @@ class User extends UsersAppModel {
      * @return boolean
      */
     public function verifyPassword() {
-        $valid = false;
-        if ($this->data[$this->alias]['password'] == $this->data[$this->alias]['verify_password']) {
-            $valid = true;
+
+        //Return false if any of the expected fields are empty
+
+        if(empty($this->data[$this->alias]['password'])){
+            return false;
         }
-        return $valid;
+        
+        if(empty($this->data[$this->alias]['verify_password'])){
+            return false;
+        }
+        
+        //Compare the fields, if they match, return true.
+        if ($this->data[$this->alias]['password'] == $this->data[$this->alias]['verify_password']) {
+            return true;
+        }
+        
+        //No match, fail the validation check.
+        return false;
     }
 
     /**
@@ -387,62 +400,6 @@ class User extends UsersAppModel {
     }
 
     /**
-     * Creates the data needed for requesting a new password.
-     * 
-     *  - Creates a pasword expiry
-     *  - Creates a pasword confirmation
-     * 
-     * Returns true if the password reset request data was saved successfully.
-     * 
-     * @param string $id
-     * @return boolean|string
-     */
-    public function createPasswordReset($id) {
-        $confirmation =  Random::uuid();
-        $data = array();
-        $data['User']['id'] = $id;
-        $data['User']['password_confirmation_expiry'] = date('Y-m-d H:i:s', strtotime('+24 hours'));
-        $data['User']['password_confirmation'] = $confirmation;
-
-        if($this->save($data)){
-            return $confirmation;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Returns true if a password_confirmation is (still) valid.
-     * 
-     * @param string $username
-     * @param string $password_confirmation
-     * @return boolean|string
-     */
-    public function verfiyPasswordReset($username, $password_confirmation) {
-
-        $confirm = $this->find(
-            'first', 
-            array(
-                'conditions' => array(
-                    "{$this->alias}.password_confirmation_expiry >=" => date('Y-m-d H:i:s'),
-                    "{$this->alias}.password_confirmation" => $password_confirmation,
-                    "{$this->alias}.username" => $username
-                ),
-                'fields' => array(
-                    "{$this->alias}.id"
-                ),
-                'contain' => array()
-            )
-        );
-
-        if (!empty($confirm)) {
-            return $confirm[$this->alias]['id'];
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Returns true if a users password was successfully reset
      * 
      * @param string $confirmedUserId The id of the confirmed user
@@ -477,5 +434,35 @@ class User extends UsersAppModel {
         
         return false;
     }
+    
+    /**
+     * Returns an empty array if the requested user is not verifiable; meaning they have and active record that is not 
+     * suspended and the like. Otherwise we retrun an array.
+     * 
+     * @param string $token
+     * @return boolean|array
+     */
+    public function verifiedUser($token) {
+
+        $user = $this->find(
+            'first', 
+            array(
+                'conditions' => array(
+                    'or'=>array(
+                        "{$this->alias}.id" => $token,
+                        "{$this->alias}.username" => $token,
+                    )
+                ),
+                'fields' => array(),
+                'contain' => array(
+                    'UserGroupUser',
+                    'UserSetting'
+                )
+            )
+        );
+                        
+        return $user;
+    }
+
 
 }
