@@ -55,9 +55,6 @@ class PasswordResetTest extends CakeTestCase {
         unset($this->PasswordReset);
     }
 
-    /**
-     * 
-     */
     public function testCreatesAPasswordResetAgainstAGivenUserId(){
         //A random user id
         $userId = '50a0edcf-d144-4470-ba4e-05437f000002';
@@ -77,10 +74,7 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertTrue(HasFormat::uuid($results['PasswordReset']['id']));
         $this->assertArrayHasKey('id', $results['PasswordReset']);
     }
-    
-    /**
-     * 
-     */
+
     public function testFetchResetPasswordReturnsAnArrayOnMatch(){
         
         $id = '52573a00-588c-4be2-9602-c4b3cd9b91e0';
@@ -91,9 +85,6 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertEqual($id, $passwordReset['PasswordReset']['id']);
     }
     
-    /**
-     * 
-     */
     public function testFetchResetPasswordReturnsAnEmptyArrayWhenNoMatchIsFound(){
         
         $id = '00000000-0000-0000-0000-000000000000';
@@ -104,9 +95,6 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertEmpty($passwordReset);
     }
     
-    /**
-     * 
-     */
     public function testPasswordResetIsExpiredAfter24Hours(){
         $id = '52573a00-588c-4be2-9602-c4b3cd9b91e0';
         $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
@@ -121,9 +109,6 @@ class PasswordResetTest extends CakeTestCase {
         
     }
     
-    /**
-     * 
-     */
     public function testNewlyCreatedPasswordResetsAreNotExpired(){
         //Create a new password reset
         $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
@@ -140,10 +125,7 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertTrue($notExpired);
         
     }
-    
-    /**
-     * 
-     */
+
     public function testNewlyCreatedPasswordResetsCanBeRetrivedAndValidated(){
         //Create a new password reset
         $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
@@ -154,30 +136,21 @@ class PasswordResetTest extends CakeTestCase {
 
         $this->assertTrue($isValid);    
     }
-    
-    /**
-     * 
-     */
+
     public function testCreatePasswordReturnsFalseOnFail(){
         //Create a new password reset
         $userId = 'not-a-uuid';
         $passwordReset = $this->PasswordReset->createPasswordReset($userId);
         $this->assertFalse($passwordReset);    
     }
-    
-    /**
-     * 
-     */
+
     public function testCreatePasswordReturnsFalseWhenAThePassedUserIdIsNotAUuid(){
         //Create a new password reset
         $userId = 'not-a-uuid';
         $passwordReset = $this->PasswordReset->createPasswordReset($userId);
         $this->assertFalse($passwordReset);    
     }
-    
-    /**
-     * 
-     */
+
     public function testExpiredPasswordResetsCanBeRetrivedAndValidated(){
         $id = '52573a00-588c-4be2-9602-c4b3cd9b91e0';
         $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
@@ -189,10 +162,6 @@ class PasswordResetTest extends CakeTestCase {
             
     }
     
-    
-    /**
-     * 
-     */
     public function testRequestsForInvalidPasswordResetCannotBeRetrivedAndOrValidated(){
         $id = '52573a00-588c-4be2-9602-c4b3cd9b91e0';
         $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
@@ -203,11 +172,7 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertFalse($isValid);
             
     }
-    
-    
-    /**
-     * 
-     */
+
     public function testNewlyExpiredPasswordResetsCanBeRetrivedAndValidated2(){
         $id = '52573a00-588c-4be2-9602-c4b3cd9b91e0';
         $userId = '50a0edcf-d144-4470-ba4e-05437f000007';
@@ -221,18 +186,15 @@ class PasswordResetTest extends CakeTestCase {
         $withInvalidId = $this->PasswordReset->isValid($invalidId, $userId);
         $this->assertFalse($withInvalidId);
     }
-    
-    /**
-     * 
-     */
+
     public function testSetPasswordChangesTheUsersHash(){
 
         $user = $this->User->verifiedUser('jason');
-        
+
         $data = array();
-        $data['User']['id'] = $user['User']['id'];
-        $data['User']['password'] = 'new_password77';
-        $data['User']['verify_password'] = 'new_password77';
+        $data['id'] = $user['User']['id'];
+        $data['password'] = 'new_password1';
+        $data['verify_password'] = 'new_password1';
         
         $this->PasswordReset->setPassword($data);
         
@@ -241,72 +203,50 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertNotEquals($user['User']['hash'], $updatedUser['User']['hash']);        
     }
     
-    
-    /**
-     * 
-     */
     public function testSetPasswordReturnsFalseWithIncompleteData(){
 
         $user = $this->User->verifiedUser('jason');
         
         $data = array();
-        $data['User']['id'] = $user['User']['id'];
-        $data['User']['password'] = 'new_password77';
-        
-        $this->assertFalse($this->PasswordReset->setPassword($data));
-        
-        
-        $data = array();
-        $data['User']['id'] = $user['User']['id'];
-        $data['User']['password'] = 'new_password77';
-        $data['User']['verify_password'] = '';
-        
-        $this->assertFalse($this->PasswordReset->setPassword($data));
-        
-        
-        $data = array();
-        $data['User']['id'] = $user['User']['id'];
-        $data['User']['password'] = '';
-        $data['User']['verify_password'] = 'new_password77';
-        
-        /// How does this pass without a user id?
+        $data['id'] = $user['User']['id'];
+        $data['password'] = 'new_password77';
         $this->assertFalse($this->PasswordReset->setPassword($data));
         
         $data = array();
-        $data['User']['password'] = 'new_password77';
-        $data['User']['verify_password'] = 'new_password77';
-        ///
-        
+        $data['id'] = $user['User']['id'];
+        $data['password'] = 'new_password77';
+        $data['verify_password'] = '';
         $this->assertFalse($this->PasswordReset->setPassword($data));
 
         $data = array();
-        $data['User']['id'] = $user['User']['id'];
-        $data['User']['password'] = '';
-        $data['User']['verify_password'] = '';
+        $data['id'] = $user['User']['id'];
+        $data['password'] = '';
+        $data['verify_password'] = 'new_password77';
+        $this->assertFalse($this->PasswordReset->setPassword($data));
         
+        $data = array();
+        $data['password'] = 'new_password77';
+        $data['verify_password'] = 'new_password77';
         $this->assertFalse($this->PasswordReset->setPassword($data));
 
         $data = array();
-        $data['User']['id'] = $user['User']['id'];
-        
+        $data['id'] = $user['User']['id'];
+        $data['password'] = '';
+        $data['verify_password'] = '';
         $this->assertFalse($this->PasswordReset->setPassword($data));
-        
 
         $data = array();
-    
+        $data['id'] = $user['User']['id'];
+        $this->assertFalse($this->PasswordReset->setPassword($data));
+        
+        $data = array();
         $this->assertFalse($this->PasswordReset->setPassword($data));
     }
     
-    /**
-     * 
-     */
     public function testResetFailsWithAnEmptyDataArray(){
         $this->assertFalse($this->PasswordReset->reset(array()));
     }
     
-    /**
-     * 
-     */
     public function testResetFailsWithAnEmptyPasswordConfirmation(){
         
         $data = array();
@@ -316,10 +256,7 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertFalse($this->PasswordReset->reset($data));
         
     }
-    
-    /**
-     * 
-     */
+
     public function testResetFailsAgainstANonUser(){
         
         $data = array();
@@ -330,10 +267,7 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertFalse($this->PasswordReset->reset($data));
         
     }
-    
-    /**
-     * 
-     */
+
     public function testResetFailsAgainstAnExpiredPasswordConfirmation(){
         
         $data = array();
@@ -345,10 +279,7 @@ class PasswordResetTest extends CakeTestCase {
         $this->assertFalse($this->PasswordReset->reset($data));
         
     }
-    
-    /**
-     * 
-     */
+
     public function testResetFailsIfThePasswordResetIdIsNotAUuid(){
         
         $data = array();        
@@ -357,10 +288,7 @@ class PasswordResetTest extends CakeTestCase {
         
     }
     
-    
-    /**
-     * 
-     */
+     
     public function testResetProcessWorksWhenAllConditionsAreValid(){
         
         //Create a new password reset
@@ -373,7 +301,6 @@ class PasswordResetTest extends CakeTestCase {
         $data['verify_password'] = 'new_password77';
         $data['password_confirmation'] = $this->PasswordReset->id;
 
-        //$this->assertTrue();
-        
+        $this->assertTrue($this->PasswordReset->reset($data));
     }
 }

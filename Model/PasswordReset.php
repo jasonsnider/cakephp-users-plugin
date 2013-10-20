@@ -204,7 +204,7 @@ class PasswordReset extends UsersAppModel {
     public function setPassword($data) {
 
         //We cannot reset a password, if we do not have the user id.
-        if(empty($data['User']['id'])){
+        if(!isset($data['id'])){
             CakeLog::write('password_reset', 'Missing user_id in ' . __METHOD__);
             return false;
         }
@@ -213,6 +213,7 @@ class PasswordReset extends UsersAppModel {
         if ($this->User->save($data)) {
             return true;
         }
+
         return false;
     }
     
