@@ -81,6 +81,31 @@ Router::connect(
 );
 
 Router::connect(
+    '/email_addresses', 
+    array(
+        'plugin' => 'Users',
+        'controller' => 'EmailAddresses',
+        'action' => 'index'
+    )
+);
+
+Router::connect(
+    '/email_addresses/:action', 
+    array(
+        'plugin' => 'Users',
+        'controller' => 'EmailAddresses'
+    )
+);
+
+Router::connect(
+    '/email_addresses/:action/*',
+    array(
+        'plugin' => 'Users',
+        'controller' => 'EmailAddresses'
+    )
+);
+
+Router::connect(
     '/admin/email_addresses', 
     array(
         'prefix' => 'admin',
