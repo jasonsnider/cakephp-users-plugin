@@ -4,8 +4,8 @@
     <h1><?php echo __d('users', 'View'); ?></h1>
     <div class="menu">
         <ul>
-            <li><?php echo $this->Html->link('Index', "/users"); ?></li>
-            <li><?php echo $this->Html->link('Edit', "/users/edit/{$id}"); ?></li>
+            <li><?php echo $this->Html->link('Index', "/users/"); ?></li>
+            <li><?php echo $this->Html->link('Edit', "/users/edit/"); ?></li>
         </ul>
     </div>
     <dl>

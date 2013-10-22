@@ -22,10 +22,6 @@
                     echo $this->Html->link(
                             'view', "/users/view/{$user['User']['id']}"
                     );
-
-                    echo $this->Html->link(
-                            'edit', "/users/edit/{$user['User']['id']}"
-                    );
                     ?> 
                 </td>
             </tr>

@@ -125,12 +125,11 @@ class UsersController extends UsersAppController {
 
     /**
      * Allows a user to update their own data
-     * @param string $id The id of the user to be edited
      * @return void
      */
-    public function edit($id) {
+    public function edit() {
 
-        $this->Authorize->me($id);
+        $id = $this->Session->read('Auth.User.id');
 
         if (!empty($this->request->data)) {
             if ($this->User->save($this->request->data)) {
