@@ -337,13 +337,14 @@ class User extends UsersAppModel {
 
         return empty($user) ? false : $user[$this->alias]['salt'];
     }
-
+    
     /**
-     * Verifies the authenticity of usersuplied credentials
+     * Verifies the authenticity of user suplied credentials
      * @param string $username
      * @param string $password
      * @param string $salt
      * @return boolean|string
+     * @depricated
      */
     public function verifyUser($username, $password, $salt) {
 
@@ -365,75 +366,6 @@ class User extends UsersAppModel {
 
         return empty($user) ? false : $user[$this->alias]['id'];
     }
-
-    /**
-     * Returns a user array. The returned data array is intended to be used as session data.
-     * @param string $verifiedUserId
-     * @return boolean|array
-     */
-    public function fetchVerifiedUser($verifiedUserId) {
-
-        $user = $this->find(
-            'first', 
-            array(
-                'conditions' => array(
-                    "{$this->alias}.id" => $verifiedUserId
-                ),
-                'fields' => array(),
-                'contain' => array(
-                    'UserGroupUser',
-                    'UserSetting'
-                )
-            )
-        );
-
-        $verifiedUser = array();
-        $verifiedUser['User'] = $user['User'];
-        
-        //Add the users settings
-        $verifiedUser['User']['UserSetting'] = $user['UserSetting'];
-        
-        //Add the id of each user_group to which the user is a member
-        $verifiedUser['User']['UserGroupUser'] = Set::extract('/UserGroupUser/./user_group_id', $user);
-        
-        return empty($user) ? false : $verifiedUser;
-    }
-
-    /**
-     * Returns true if a users password was successfully reset
-     * 
-     * @param string $confirmedUserId The id of the confirmed user
-     * @param array $data The user sumbitted data
-     * @return boolean Returns true if the passward was succefully reset
-     */
-    public function resetPassword($confirmedUserId, $data) {
-
-        //Verify the user id
-        if (strlen($confirmedUserId) != 36) {
-            return false;
-        }
-
-        //Verify the user id
-        if (strlen($data[$this->alias]['id']) != 36) {
-            return false;
-        }
-
-        //Verify the user id
-        if ($data[$this->alias]['id'] != $confirmedUserId) {
-            return false;
-        }
-
-        //Reset the confirmation fields
-        $data[$this->alias]['password_confirmation_expiry'] = null;
-        $data[$this->alias]['password_confirmation'] = null;
-
-        //Change the password
-        if ($this->save($data)) {
-            return true;
-        }
-        
-        return false;
-    }
     
     /**
      * Returns an empty array if the requested user is not verifiable; meaning they have and active record that is not 
@@ -443,7 +375,7 @@ class User extends UsersAppModel {
      * @return boolean|array
      */
     public function verifiedUser($token) {
-
+        
         $user = $this->find(
             'first', 
             array(
@@ -463,6 +395,65 @@ class User extends UsersAppModel {
                         
         return $user;
     }
+    
+    /**
+     * Reshaps an array of user data into a session friendly 
+     * For sessions we want to follow Auth.User.[all associated user data].
+     * @param array $user
+     * @return array
+     */
+    public function shapeUserDataForSession($user){
+        
+        $shapedUser = array();
+        $shapedUser['User'] = $user['User'];
+        
+        //Add the users settings
+        $shapedUser['User']['UserSetting'] = $user['UserSetting'];
+        
+        //Add the id of each user_group to which the user is a member
+        $shapedUser['User']['UserGroupUser'] = Set::extract('/UserGroupUser/./user_group_id', $user);
+        
+        return $shapedUser;
+    }
 
+    /**
+     * Processes a login attempt, returns an empty array if nthe attempt failed, returns a populated session ready
+     * array of user data on success.
+     * @param array $data
+     * @return array
+     */
+    public function processLoginAttempt($data){
+            
+        //// 1. Fetch the salt value for the given username
+        $salt = $this->fetchUserSalt($data['User']['username']);
+
+        if($salt){
+
+            //// 2. If faethUserSalt did not return false, verify the given user creadintials
+            $isVerified = $this->verifyUser(
+                $data['User']['username'], 
+                $data['User']['password'], 
+                $salt
+            );
+
+            if($isVerified){
+                //// 3. Now that the password has been verified, grab the user data
+                $verifiedUser = $this->verifiedUser($data['User']['username']);
+
+                if (!empty($verifiedUser)) {
+                    //// 4. Push the user data into a session friendly format
+                    return $this->shapeUserDataForSession($verifiedUser);
+                }
+            }else{
+                $this->validationErrors['password'] = 'Invalid password.';
+            }
+            
+        }else{
+            $this->validationErrors['username'] = 'User not found.';
+        }
+
+        //Something went wrong, return an empty array
+        return array();
+    }
 
 }

@@ -83,8 +83,6 @@ class UserTest extends CakeTestCase {
             );
         }
 
-        debug($result);
-
         //returning 128 character string should mean hashing has occured
         $this->assertEquals(128, strlen($result['User']['hash']));
         $this->assertEquals(128, strlen($result['User']['salt']));
@@ -193,10 +191,6 @@ class UserTest extends CakeTestCase {
             );
         }
 
-        debug($result1);
-
-
-
         //Not setting a password MUST NOT trigger hashing
         $this->User->create();
 
@@ -254,8 +248,6 @@ class UserTest extends CakeTestCase {
 
         $toDelete = $this->User->purgeUser($id);
 
-        //debug($toDelete);
-
         $this->assertFalse($toDelete);
 
         //Make sure the record was not deleted
@@ -269,7 +261,7 @@ class UserTest extends CakeTestCase {
             )
                 )
         );
-        debug($result);
+        
         $this->assertEquals('jason', $result['User']['username']);
         $this->assertEquals($id, $result['UserSetting']['user_id']);
     }
@@ -318,7 +310,6 @@ class UserTest extends CakeTestCase {
                 )
         );
 
-        debug($result);
         $this->assertEmpty($result);
     }
 
@@ -329,7 +320,7 @@ class UserTest extends CakeTestCase {
 
         $id = '50a0edcf-d144-4470-ba4e-05437f000007'; //This  record IS an employee
 
-        if ($this->User->unsetEmployeeFlag($id)) { //debug($this->User->id); die();
+        if ($this->User->unsetEmployeeFlag($id)) {
             $result = $this->User->find(
                     'first', array(
                 'conditions' => array(
@@ -365,8 +356,7 @@ class UserTest extends CakeTestCase {
             )
                 )
         );
-
-        debug($result);
+        
         $this->assertEmpty($result);
     }
 
@@ -380,26 +370,70 @@ class UserTest extends CakeTestCase {
     }
 
     /**
-     * Tests verifyUser
-     */
-    public function testVerifyUser() {
-        $results = $this->User->verifyUser(
-                'jason', 'password', 'a5ca1c6afeac34b60b85aeb2e7e783ae8569d3eeb43bea71ab97f8567f7ba59db1f4e728a120473e75069e7f1f2cdbec689d5077311d3543892bcf93c8cc2ba0'
-        );
-
-        $this->assertEquals('50a0edcf-d144-4470-ba4e-05437f000007', $results);
-    }
-
-    /**
      * Tests fetchVerifiedUser
      */
-    public function testFetchVerifiedUser() {
+    public function testUsersMeetingTheCriteriaOfVerifiedUserWillBeReturned() {
 
-        $results = $this->User->fetchVerifiedUser('50a0edcf-d144-4470-ba4e-05437f000007');
+        $results = $this->User->verifiedUser('50a0edcf-d144-4470-ba4e-05437f000007');
+        
 
+        $this->assertArrayHasKey('id', $results['User']);
+        $this->assertEquals('50a0edcf-d144-4470-ba4e-05437f000007', $results['UserSetting']['user_id']);
+        $this->assertEquals('50a0edcf-d144-4470-ba4e-05437f000007', $results['UserGroupUser'][0]['user_id']);
+        
+        $this->assertEquals($results['User']['username'], 'jason');
+    }
+    
+    public function testShapeUserDataProperlyFormatsUserDataInToASessionCompatibleArray() {
+
+        $theUser = $this->User->verifiedUser('50a0edcf-d144-4470-ba4e-05437f000007');
+        $results = $this->User->shapeUserDataForSession($theUser);
+        
         $this->assertArrayHasKey('id', $results['User']);
         $this->assertArrayHasKey('id', $results['User']['UserSetting']);
         $this->assertContains('50a1c275-8c38-477d-8682-0f247f000007', $results['User']['UserGroupUser']);
         $this->assertEquals($results['User']['username'], 'jason');
+    }
+    
+    public function testProcessLoginSucceedsWithGoodData() {
+
+        $data = array();
+        $data['User']['username'] = 'jason';
+        $data['User']['password'] = 'password';
+        $attempt = $this->User->processLoginAttempt($data);
+        $this->assertArrayHasKey('id', $attempt['User']);
+    }
+    
+    public function testProcessLoginAttemptFailsIfThePasswordIsBad() {
+
+        $data = array();
+        $data['User']['username'] = 'jason';
+        $data['User']['password'] = 'not-my-password';
+        
+        $attempt = $this->User->processLoginAttempt($data);
+        $this->assertArrayHasKey('password', $this->User->validationErrors);
+        $this->assertEmpty($attempt);
+    }
+    
+    public function testProcessLoginAttemptFailsIfTheUserDoesNotExist() {
+
+        $data = array();
+        $data['User']['username'] = 'im-not-therefore-i-aint';
+        $data['User']['password'] = 'password';
+        
+        $attempt = $this->User->processLoginAttempt($data);
+        $this->assertArrayHasKey('username', $this->User->validationErrors);
+        $this->assertEmpty($attempt);
+    }
+    
+    public function testProcessLoginAttemptFailsIfTheSaltIsBad() {
+
+        $data = array();
+        $data['User']['username'] = 'bad-salt';
+        $data['User']['password'] = 'password1';
+        
+        $attempt = $this->User->processLoginAttempt($data);
+        //$this->assertArrayHasKey('password', $this->User->validationErrors);
+        $this->assertEmpty($attempt);
     }
 }

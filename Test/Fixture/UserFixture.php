@@ -84,5 +84,21 @@ class UserFixture extends CakeTestFixture {
             'modified' => '2012-11-12 06:39:40',
             'modified_user_id' => '00000000-0000-0000-0000-000000000000'
         ),
+        //A user with a bad salt value
+        array(
+            'id' => '50a0ee0c-1e44-4869-b1e9-0f247f000000',
+            'username' => 'bad-salt',
+            'hash' => '1367b93a89c617656a0cbe2b33fe4279d815da018fa986cd34d773ec66ab1bb67c1c0fb551908e64aeefb0f360ce1927ac9056e341c61df2868331b373c13abc',
+            'salt' => '64ffa655c6205a93c81707ec5dedabf60011e222653c2bf2a803dd15d99a4cbcc58dc4b1eea5e5492eb4c7ca9147f98283b9c56d92df127d2193b53b460def75',
+			'root' => 0,
+			'employee' => 0,
+			'protected' => 0,
+			'password_confirmation' => null,
+			'password_confirmation_expiry' => null,
+            'created' => '2012-11-12 06:39:40',
+            'created_user_id' => '00000000-0000-0000-0000-000000000000',
+            'modified' => '2012-11-12 06:39:40',
+            'modified_user_id' => '00000000-0000-0000-0000-000000000000'
+        ),
     );
 }

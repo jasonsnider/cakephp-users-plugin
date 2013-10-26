@@ -289,56 +289,33 @@ class UsersController extends UsersAppController {
      */
     public function login() {
 
+        //Holds a common flash message for all errors occuring within this action
+        $errorFlashMessage = __('You could not be authenticated!');
+        
+        //// 1. Has a user submitted credentials for authentication?
         if (!empty($this->request->data)) {
-
-            //Do a cursory check for empty fields
-            $stop = false;
+            //// 2. Make sure the neither of the fileds have empty data
             if (empty($this->request->data['User']['username'])) {
                 $this->User->validationErrors['username'] = 'Please enter your username.';
-                $stop = true;
+                $this->Session->setFlash($errorFlashMessage, 'error');
             }
 
             if (empty($this->request->data['User']['password'])) {
                 $this->User->validationErrors['password'] = 'Please enter your password.';
-                $stop = true;
-            }
+                return $this->Session->setFlash($errorFlashMessage, 'error');
+            }            
+            
+            $user = $this->User->processLoginAttempt($this->request->data);
 
-            if ($stop) {
-                //If a field was sumitted in an empty state, stop execution and demand it be corrected.
-                return $this->Session->setFlash(__('Please correct the errors below!'), 'error');
-            }
-
-            //Based on the username, get the user salt
-            $salt = $this->User->fetchUserSalt($this->request->data['User']['username']);
-            if ($salt) {
-
-                //If we found a valid salt value, hash it with the user submtted password and verify the credentials
-                //against a database record
-                $verifiedUserId = $this->User->verifyUser(
-                        $this->request->data['User']['username'], $this->request->data['User']['password'], $salt
-                );
-
-                if ($verifiedUserId) {
-
-                    //If we have a verified user id, fetch the user data
-                    $verifiedUser = $this->User->fetchVerifiedUser($verifiedUserId);
-
-                    if ($verifiedUser) {
-
-                        //Force the retrieved data in the data array
-                        $this->request->data = $verifiedUser['User'];
-
-                        //Create a login/auth session from the verified data
-                        if ($this->Auth->login($this->request->data)) {
-
-                            $this->Session->setFlash(__('Welcome to the party!'), 'success');
-                            return $this->redirect($this->Auth->redirect());
-                        }
-                    }
+            if(!empty($user)){
+                //Create a login/auth session from the verified data
+                if ($this->Auth->login($this->request->data)) {
+                    $this->Session->setFlash(__('Welcome to the party!'), 'success');
+                    return $this->redirect($this->Auth->redirect());
                 }
             }
-
-            $this->Session->setFlash(__('Username or password is incorrect!'), 'error');
+          
+            return $this->Session->setFlash($errorFlashMessage, 'error');
         }
     }
 

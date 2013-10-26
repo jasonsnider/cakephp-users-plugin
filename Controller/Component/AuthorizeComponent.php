@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A class for determinig if a user is authorized for a particular actions.
  *
@@ -21,7 +20,7 @@ App::uses('AppController', 'Controller');
  * Some parts adapted from
  * @link https://github.com/cakephp/cakephp/blob/master/lib/Cake/Controller/Component/AuthComponent.php
  * 
- * @author Jaso D Snider <jason.snider@42viral.org>
+ * @author Jaso D Snider <jason@jasonsnider.com>
  * @package	Users
  */
 class AuthorizeComponent extends Component {

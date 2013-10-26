@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A component for retreving all controllers and methods
  * 
