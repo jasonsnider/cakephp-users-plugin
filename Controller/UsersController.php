@@ -307,9 +307,10 @@ class UsersController extends UsersAppController {
             
             $user = $this->User->processLoginAttempt($this->request->data);
 
-            if(!empty($user)){
+            if(!empty($user['User'])){
                 //Create a login/auth session from the verified data
-                if ($this->Auth->login($this->request->data)) {
+                if ($this->Auth->login($user['User'])) {
+                    
                     $this->Session->setFlash(__('Welcome to the party!'), 'success');
                     return $this->redirect($this->Auth->redirect());
                 }
