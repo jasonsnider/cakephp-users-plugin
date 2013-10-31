@@ -1,4 +1,4 @@
-<?php echo $this->element('sidebar'); ?>
+<?php echo $this->element('Utilities.sidebar'); ?>
 <div class="form">
     <h1><?php echo __d('users', 'Edit User'); ?></h1>
     <?php echo $this->Form->create('User'); ?>

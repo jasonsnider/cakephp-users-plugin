@@ -1,4 +1,4 @@
-<?php echo $this->element('sidebar'); ?>
+<?php echo $this->element('Utilities.sidebar'); ?>
 <div class="view">
     <h1><?php echo __d('email_addresses', 'Admin :: Create'); ?></h1>
     <div class="menu">
