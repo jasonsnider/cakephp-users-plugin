@@ -22,7 +22,7 @@
         endfor;
 
         echo $this->Html->link(
-                __d('users', 'Add an Email'), "/admin/email_addresses/create/user/{$this->data['User']['id']}"
+                __d('users', 'Add an Email'), "/admin/users/email_addresses/create/user/{$this->data['User']['id']}"
         );
         ?>
     </fieldset>
@@ -40,7 +40,7 @@
     <div class="menu">
         <ul>
             <li><?php echo $this->Html->link('Edit', "/users"); ?></li>
-            <li><?php echo $this->Html->link('View', "/users/view/{$id}"); ?></li>
+            <li><?php echo $this->Html->link('View', "/users/users/view/{$id}"); ?></li>
         </ul>
     </div>
 </div>

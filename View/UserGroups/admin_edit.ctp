@@ -4,9 +4,9 @@
     <div class="menu">
         <ul>
             <li><?php echo $this->Html->link('Index', '/admin/user_groups'); ?></li>
-            <li><?php echo $this->Html->link('Create', '/admin/user_groups/create'); ?></li>
-            <li><?php echo $this->Html->link('Edit', "/admin/user_groups/view/{$id}"); ?></li>
-            <li><?php echo $this->Html->link('Delete', "/admin/user_groups/delete/{$id}", null, 'Are you sure?'); ?></li>
+            <li><?php echo $this->Html->link('Create', '/admin/users/user_groups/create'); ?></li>
+            <li><?php echo $this->Html->link('Edit', "/admin/users/user_groups/view/{$id}"); ?></li>
+            <li><?php echo $this->Html->link('Delete', "/admin/users/user_groups/delete/{$id}", null, 'Are you sure?'); ?></li>
         </ul>
     </div>
     <?php echo $this->Form->create('UserGroup'); ?>

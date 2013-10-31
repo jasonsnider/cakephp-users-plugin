@@ -3,7 +3,7 @@
     <h1><?php echo __d('user_group', 'Admin :: UserGroups'); ?></h1>
     <div class="menu">
         <ul>
-            <li><?php echo $this->Html->link('Create', '/admin/user_groups/create'); ?></li>
+            <li><?php echo $this->Html->link('Create', '/admin/users/user_groups/create'); ?></li>
         </ul>
     </div>
     <table>
@@ -27,15 +27,15 @@
                 <td class="actions">
                     <?php
                     echo $this->Html->link(
-                            'view', "/admin/user_groups/view/{$user_group['UserGroup']['id']}"
+                            'view', "/admin/users/user_groups/view/{$user_group['UserGroup']['id']}"
                     );
 
                     echo $this->Html->link(
-                            'edit', "/admin/user_groups/edit/{$user_group['UserGroup']['id']}"
+                            'edit', "/admin/users/user_groups/edit/{$user_group['UserGroup']['id']}"
                     );
 
                     echo $this->Html->link(
-                            'delete', "/admin/user_groups/delete/{$user_group['UserGroup']['id']}", null, 'Are you sure?'
+                            'delete', "/admin/users/user_groups/delete/{$user_group['UserGroup']['id']}", null, 'Are you sure?'
                     );
                     ?> 
                 </td>

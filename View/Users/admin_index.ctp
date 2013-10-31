@@ -3,7 +3,7 @@
     <h1><?php echo __d('users', 'Admin :: Users'); ?></h1>
     <div class="menu">
         <ul>
-            <li><?php echo $this->Html->link('Create', '/admin/users/create'); ?></li>
+            <li><?php echo $this->Html->link('Create', '/admin/users/users/create'); ?></li>
         </ul>
     </div>
     <table>
@@ -38,15 +38,15 @@
                                 0=>$user['User']['id']
                                 
                             )
-                            //"/admin/users/view/{$user['User']['id']}"
+                            //"/admin/users/users/view/{$user['User']['id']}"
                     );
 
                     echo $this->Html->link(
-                            'edit', "/admin/users/edit/{$user['User']['id']}"
+                            'edit', "/admin/users/users/edit/{$user['User']['id']}"
                     );
 
                     echo $this->Html->link(
-                            'delete', "/admin/users/delete/{$user['User']['id']}", null, 'Are you sure?'
+                            'delete', "/admin/users/users/delete/{$user['User']['id']}", null, 'Are you sure?'
                     );
                     ?> 
                 </td>

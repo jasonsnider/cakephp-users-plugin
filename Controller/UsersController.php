@@ -93,7 +93,7 @@ class UsersController extends UsersAppController {
         if (!empty($this->request->data)) {
             if ($this->User->createUser($this->request->data)) {
                 $this->Session->setFlash(__('The record has been created!'), 'success');
-                $this->redirect('/users/login/');
+                $this->redirect('/users/users/login/');
             } else {
                 $this->Session->setFlash(__('Please correct the erros below!'), 'error');
             }
@@ -379,7 +379,7 @@ class UsersController extends UsersAppController {
                     'success'
                 );
 
-                $this->redirect("/users/reset_password/{$username}");
+                $this->redirect("/users/users/reset_password/{$username}");
             } else {
                 $this->Session->setFlash(__('We could not complete your request'), 'success');
             }
@@ -396,7 +396,7 @@ class UsersController extends UsersAppController {
 
             if($this->PasswordReset->reset($this->request->data['User'])){
                 $this->Session->setFlash(__('Your password has been reset, you may now login.'), 'successs');
-                $this->redirect('/users/login/');
+                $this->redirect('/users/users/login/');
                 exit;
             }else{
                 $this->Session->setFlash(__('Your password could not be reset.'), 'error');

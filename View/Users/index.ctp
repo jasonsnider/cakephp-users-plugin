@@ -20,7 +20,7 @@
                 <td class="actions">
                     <?php
                     echo $this->Html->link(
-                            'view', "/users/view/{$user['User']['id']}"
+                            'view', "/users/users/view/{$user['User']['id']}"
                     );
                     ?> 
                 </td>
