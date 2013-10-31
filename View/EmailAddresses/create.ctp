@@ -1,6 +1,6 @@
 <?php echo $this->element('Utilities.sidebar'); ?>
 <div class="view">
-    <h1><?php echo __d('email_addresses', 'Create'); ?></h1>
+    <h2><?php echo __d('email_addresses', 'Create'); ?></h2>
     <div class="menu">
         <ul>
             <li><?php echo $this->Html->link('Index', '/users'); ?></li>

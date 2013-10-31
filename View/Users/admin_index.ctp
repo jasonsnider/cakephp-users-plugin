@@ -1,6 +1,6 @@
 <?php echo $this->element('Utilities.sidebar'); ?>
 <div class="index">
-    <h1><?php echo __d('users', 'Admin :: Users'); ?></h1>
+    <h2><?php echo __d('users', 'Admin :: Users'); ?></h2>
     <div class="menu">
         <ul>
             <li><?php echo $this->Html->link('Create', '/admin/users/users/create'); ?></li>

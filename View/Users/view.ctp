@@ -1,7 +1,7 @@
 <?php echo $this->element('Utilities.sidebar'); ?>
 
 <div class="view">
-    <h1><?php echo __d('users', 'View'); ?></h1>
+    <h2><?php echo __d('users', 'View'); ?></h2>
     <div class="menu">
         <ul>
             <li><?php echo $this->Html->link('Index', "/users/users/"); ?></li>

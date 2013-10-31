@@ -33,7 +33,7 @@ class UsersAppController extends AppController {
             //Force a central login (1 login per prefix by default).
             'loginAction' => array(
                 'admin' => false,
-                'plugin' => false,
+                'plugin' => 'users',
                 'controller' => 'users',
                 'action' => 'login'
             ),

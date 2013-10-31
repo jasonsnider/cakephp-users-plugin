@@ -1,6 +1,6 @@
 <?php echo $this->element('Utilities.sidebar'); ?>
 <div class="index">
-    <h1>Users</h1>
+    <h2>Users</h2>
     <table>
         <caption>
             <?php

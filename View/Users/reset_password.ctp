@@ -3,7 +3,7 @@
     <p>If you haven't received instructions for reseting your password, check your email's spam
     and junk folder, or try <a href="/users/users/reset_password_request">resending your request.</a></p>
     
-    <h1><?php echo __d('users', 'Reset Password'); ?></h1>
+    <h2><?php echo __d('users', 'Reset Password'); ?></h2>
     <?php
     echo $this->Form->create('User');
     echo $this->Form->input('password');

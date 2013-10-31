@@ -1,6 +1,6 @@
 <?php echo $this->element('Utilities.sidebar'); ?>
 <div class="view">
-    <h1><?php echo __d('users', 'New Account'); ?></h1>
+    <h2><?php echo __d('users', 'New Account'); ?></h2>
     <?php
     echo $this->Form->create('User');
     echo $this->Form->input('username');

@@ -1,7 +1,7 @@
 <?php echo $this->element('Utilities.sidebar'); ?>
 
 <div class="view">
-    <h1><?php echo __d('users', 'Admin :: View'); ?></h1>
+    <h2><?php echo __d('users', 'Admin :: View'); ?></h2>
     <?php echo $this->element('Users/admin'); ?>
     <dl>
 

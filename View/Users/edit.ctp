@@ -1,6 +1,6 @@
 <?php echo $this->element('Utilities.sidebar'); ?>
 <div class="form">
-    <h1><?php echo __d('users', 'Edit User'); ?></h1>
+    <h2><?php echo __d('users', 'Edit User'); ?></h2>
     <?php echo $this->Form->create('User'); ?>
     <fieldset>
         <legend><?php echo __d('users', 'User Details'); ?></legend>
