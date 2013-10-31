@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provides a model for mananging users
  *
