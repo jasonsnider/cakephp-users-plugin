@@ -12,15 +12,14 @@
         </caption>
         <tr>
             <th><?php echo $this->Paginator->sort('username', 'Username'); ?></th>
-            <th>Actions</th>
         </tr>
         <?php foreach ($data as $user): ?>
             <tr>
-                <td><?php echo $user['User']['username']; ?></td>
-                <td class="actions">
+                <td>
                     <?php
                     echo $this->Html->link(
-                            'view', "/users/users/view/{$user['User']['id']}"
+                        $user['User']['username'], 
+                        "/users/users/view/{$user['User']['id']}"
                     );
                     ?> 
                 </td>
