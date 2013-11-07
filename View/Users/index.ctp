@@ -1,4 +1,4 @@
-<?php echo $this->element('Utilities.sidebar'); ?>
+<?php echo $this->element('sidebar'); ?>
 <div class="index">
     <h2>Users</h2>
     <table>

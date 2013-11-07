@@ -1,4 +1,4 @@
-<?php echo $this->element('Utilities.sidebar'); ?>
+<?php echo $this->element('sidebar'); ?>
 <div class="form">
     <p>If you haven't received instructions for reseting your password, check your email's spam
     and junk folder, or try <a href="/users/users/reset_password_request">resending your request.</a></p>
