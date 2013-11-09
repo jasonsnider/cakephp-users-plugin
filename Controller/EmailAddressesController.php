@@ -50,11 +50,13 @@ class EmailAddressesController extends UsersAppController {
 
     /**
      * Provides a UI for creating an email address against any model
-     * @param string $model
-     * @param string $model_id
+     * @return void
      */
-    public function create($model, $model_id) {
-        $this->Authorize->me($model_id);
+    public function create() {
+
+        $model = 'Person';
+        $model_id = $this->Session->read('Auth.User.id');
+ 
         if (!empty($this->request->data)) {
             if ($this->EmailAddress->save($this->data)) {
 
