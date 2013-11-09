@@ -1,4 +1,3 @@
-<?php echo $this->element('sidebar'); ?>
 <div class="view">
     <h2><?php echo __d('users', 'Login'); ?></h2>
     <?php

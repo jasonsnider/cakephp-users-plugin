@@ -1,4 +1,3 @@
-<?php echo $this->element('sidebar'); ?>
 <div class="form">
     <h2><?php echo __d('users', 'Admin :: Edit User'); ?></h2>
         

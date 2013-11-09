@@ -1,4 +1,3 @@
-<?php echo $this->element('sidebar'); ?>
 <div class="form">
     <h2><?php echo __d('users', 'Reset Password Request'); ?></h2>
     <?php
