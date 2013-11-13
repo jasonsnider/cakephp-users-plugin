@@ -1,45 +1,60 @@
-<div class="index">
-    <h2><?php echo __d('user_group', 'Admin :: UserGroups'); ?></h2>
-    <div class="menu">
-        <ul>
-            <li><?php echo $this->Html->link('Create', '/admin/users/user_groups/create'); ?></li>
-        </ul>
-    </div>
-    <table>
-        <caption>
-            <?php
-            echo $this->Paginator->counter(array(
-                'format' => 'Page {:page} of {:pages}, showing {:current} records out of
-                         {:count} total, starting on record {:start}, ending on {:end}'
-            ));
-            ?>
-        </caption>
-        <tr>
-            <th><?php echo $this->Paginator->sort('username', 'UserGroupname'); ?></th>
-            <th><?php echo $this->Paginator->sort('employee', 'Employee'); ?></th>
-            <th>Actions</th>
-        </tr>
-        <?php foreach ($user_groups as $user_group): ?>
-            <tr>
-                <td><?php echo $user_group['UserGroup']['alias']; ?></td>
-                <td><?php echo $user_group['UserGroup']['name']; ?></td>
-                <td class="actions">
+<h1><?php echo __d('user_group', 'Admin :: User Groups'); ?></h1>
+<ul class="nav nav-pills">
+    <li>
+    <?php
+        echo $this->Html->link(
+            'Create',
+            array(
+                'admin'=>true,
+                'plugin'=>'users',
+                'controller'=>'user_groups',
+                'action'=>'create'
+            )
+        );
+    ?>
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <?php if(!empty($user_groups)): ?>
+            <table class="table table-bordered table-condensed table-striped table-hover">
+                <caption>
                     <?php
-                    echo $this->Html->link(
-                            'view', "/admin/users/user_groups/view/{$user_group['UserGroup']['id']}"
-                    );
-
-                    echo $this->Html->link(
-                            'edit', "/admin/users/user_groups/edit/{$user_group['UserGroup']['id']}"
-                    );
-
-                    echo $this->Html->link(
-                            'delete', "/admin/users/user_groups/delete/{$user_group['UserGroup']['id']}", null, 'Are you sure?'
-                    );
-                    ?> 
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-    <?php echo $this->element('pager'); ?>
+                    echo $this->Paginator->counter(array(
+                        'format' => 'Page {:page} of {:pages}, showing {:current} records out of
+                                 {:count} total, starting on record {:start}, ending on {:end}'
+                    ));
+                    ?>
+                </caption>
+                <tr>
+                    <th><?php echo $this->Paginator->sort('alias', 'Alias'); ?></th>
+                    <th><?php echo $this->Paginator->sort('name', 'Name'); ?></th>
+                </tr>
+                <?php foreach ($user_groups as $user_group): ?>
+                    <tr>
+                        <td>
+                            <?php 
+                            echo $this->Html->link(
+                                $user_group['UserGroup']['alias'],
+                                array(
+                                    'admin'=>true,
+                                    'plugin'=>'users',
+                                    'controller'=>'user_groups',
+                                    'action'=>'view',
+                                    0=>$user_group['UserGroup']['id']
+                                )
+                            );
+                            ?>
+                        </td>
+                        <td><?php echo $user_group['UserGroup']['name']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php echo $this->element('pager'); ?>
+        <?php else: ?>
+            <div class="well well-sm text-center">
+                <?php echo __('No groups have been created.'); ?>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>

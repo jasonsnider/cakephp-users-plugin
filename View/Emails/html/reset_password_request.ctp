@@ -1,4 +1,4 @@
-<h2>Forgot your password, <?php echo $username; ?>?</h2>
+<h1>Forgot your password, <?php echo $username; ?>?</h1>
 
 <p><?php echo $entityName; ?> received a request to reset the password. If you didn't make this request, or 
     no longer need to reset your password, take no action and this link will expire within 24 hours.</p>

@@ -1,17 +1,34 @@
-<div class="form">
-    <h2><?php echo __d('users', 'Admin :: Edit User'); ?></h2>
-        
-    <?php echo $this->element('Users/admin'); ?>
-
-    <?php echo $this->Form->create('User'); ?>
+<h1><?php echo __d('users', 'Admin :: Edit User'); ?></h1>
+<ul class="nav nav-pills">
+    <li><?php echo $this->Html->link('Index', '/admin/users/users'); ?></li>
+    <li><?php echo $this->Html->link('Edit', "/admin/users/users/edit/{$id}"); ?></li>
+</ul>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+    <?php 
+        echo $this->Form->create(
+            'User', 
+            array(
+                'url'=>$this->here,
+                'role'=>'form',
+                'inputDefaults'=>array(
+                    'div'=>array(
+                        'class'=>'form-group'
+                    ),
+                    'class'=>'form-control',
+                    'required'=>false
+                )
+            )
+        );
+    ?>
     <fieldset>
         <legend><?php echo __d('users', 'User Details'); ?></legend>
         <?php
         echo $this->Form->input('id');
         echo $this->Form->input('username');
-        echo $this->Form->input('employee');
-        echo $this->Form->input('root');
-        echo $this->Form->input('protected');
+        echo $this->Form->input('employee', array('class'=>false));
+        echo $this->Form->input('root', array('class'=>false));
+        echo $this->Form->input('protected', array('class'=>false));
         ?>
     </fieldset>
 
@@ -127,7 +144,9 @@
                             1 => 'allow',
                             2 => 'undefined'
                         ),
-                        'value' => $allowed
+                        'value' => $allowed,
+                        'class'=>false,
+                        'div'=>false
                     )
                 );
             }
@@ -135,6 +154,17 @@
         ?>
     </fieldset>
 
-    <?php echo $this->Form->end(__d('users', 'Submit')); ?>
-
+    <?php 
+    echo $this->Form->submit(
+         __d('users', 'Submit'), 
+         array(
+             'div'=>array(
+                 'class'=>'form-group'
+             ),
+             'class'=>'btn btn-primary btn-block'
+         )
+     ); 
+    echo $this->Form->end();
+    ?>
+    </div>
 </div>
