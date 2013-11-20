@@ -23,34 +23,6 @@ App::uses('AppController', 'Controller');
  * @package app
  */
 class UsersAppController extends AppController {
-
-    /**
-     * Calls the application wide components
-     * @var array $components
-     */
-    public $components = array(
-        'Auth' => array(
-            //Force a central login (1 login per prefix by default).
-            'loginAction' => array(
-                'admin' => false,
-                'plugin' => 'users',
-                'controller' => 'users',
-                'action' => 'login'
-            ),
-            'authError' => 'You are not allowed to do that.',
-            'authenticate' => array(
-                'Form' => array(
-                    'fields' => array(
-                        'username' => 'username',
-                        'password' => 'hash'
-                    )
-                )
-            )
-        ),
-        'Users.Authorize',
-        'Security',
-        'Session'
-    );
     
     /**
      * Called before action
