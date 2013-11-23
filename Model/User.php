@@ -62,6 +62,11 @@ class User extends UsersAppModel {
             'className' => 'Users.UserSetting',
             'foreignKey' => 'user_id',
             'dependent' => true
+        ),
+        'UserProfile' => array(
+            'className' => 'Users.UserProfile',
+            'foreignKey' => 'user_id',
+            'dependent' => true
         )
     );
 
