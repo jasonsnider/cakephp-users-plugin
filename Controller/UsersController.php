@@ -90,6 +90,14 @@ class UsersController extends UsersAppController {
      */
     public function create() {
 
+        if(Configure::read('Parbake.Users.allow_new_users')===false){
+            $this->Session->setFlash(
+                __("I'm sorry, we are not accepting new users at this time."),
+                'info'
+            );
+            $this->redirect('/');
+        }
+        
         if (!empty($this->request->data)) {
             if ($this->User->createUser($this->request->data)) {
                 $this->Session->setFlash(__('The record has been created!'), 'success');
