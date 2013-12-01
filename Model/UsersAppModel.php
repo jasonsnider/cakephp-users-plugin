@@ -20,7 +20,7 @@ class UsersAppModel extends AppModel {
      * 
      * @return boolean
      */
-    public function beforeSave() {
+    public function beforeSave($options = array()) {
 
         //Force all model names to tbe classsy all model names
         if (isset($this->data[$this->alias]['model'])) {
