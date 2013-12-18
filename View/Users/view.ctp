@@ -6,20 +6,23 @@
 
 <div class="row">
     <div class="col-md-4">
-        <dl>
-
-            <dt><?php echo __d('users', 'ID'); ?></dt>
-            <dd><?php echo $user['User']['id']; ?>&nbsp;</dd>
-
-            <dt><?php echo __d('users', 'Username'); ?></dt>
-            <dd><?php echo $user['User']['username']; ?>&nbsp;</dd>
-
-            <dt><?php echo __d('users', 'Created'); ?></dt>
-            <dd><?php echo $user['User']['created']; ?>&nbsp;</dd>
-
-            <dt><?php echo __d('users', 'Modified'); ?></dt>
-            <dd><?php echo $user['User']['modified']; ?>&nbsp;</dd>
-
-        </dl>
+        <table class="table table-bordered table-condensed table-responsive table-striped">
+            <tr>
+                <th><?php echo __d('users', 'ID'); ?></th>
+                <td><?php echo $user['User']['id']; ?></td>
+            </tr>
+            <tr>
+                <th><?php echo __d('users', 'Username'); ?></th>
+                <td><?php echo $user['User']['username']; ?></td>
+            </tr>
+            <tr>
+                <th><?php echo __d('users', 'Created'); ?></th>
+                <td><?php echo $user['User']['created']; ?></td>
+            </tr>
+            <tr>
+                <th><?php echo __d('users', 'Modified'); ?></th>
+                <td><?php echo $user['User']['modified']; ?></td>
+            </tr>
+        </table>
     </div>
 </div>

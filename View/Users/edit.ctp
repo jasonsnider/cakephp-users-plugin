@@ -4,7 +4,7 @@
     <li><?php echo $this->Html->link('View', "/users/users/view/{$id}"); ?></li>
 </ul>
 <div class="row">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-4">
         <?php
         echo $this->Form->create(
             'User', 
