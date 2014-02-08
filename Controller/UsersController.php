@@ -396,9 +396,12 @@ class UsersController extends UsersAppController {
 
     /**
      * Provided the UI for a user to enter and reset their password
+     * @param string $password_confirmation A confrmation token that verifies the rquestor has control of a targt email 
+     * address
+     * @param string $username The account of username for the password to be reset
      * @return void
      */
-    public function reset_password() {
+    public function reset_password($password_confirmation=null, $username=null) {
         
         if (!empty($this->request->data)) {
 
