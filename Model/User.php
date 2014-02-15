@@ -269,6 +269,7 @@ class User extends UsersAppModel {
             'UserSetting' => array(
                 'visibility' => 'public'
             ),
+            'UserProfile'=>array(),
             'EmailAddress' => $data['EmailAddress']
         );
         
