@@ -18,6 +18,11 @@
  */
 class CtrlComponent extends Component {
 
+    /**
+     * Provides access to the Controller Object
+     * @param Controller $controller
+     * @return void
+     */
     public function startup(Controller $controller) {
         $this->Controller = $controller;
     }
@@ -96,8 +101,8 @@ class CtrlComponent extends Component {
     }
 
     /**
-     * 
-     * @return returns a list of all controllers within all plugins
+     * Returns a list of all controllers within all plugins
+     * @return array
      */
     public function getPluginControllers() {
 

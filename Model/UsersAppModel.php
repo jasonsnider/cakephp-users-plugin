@@ -1,7 +1,13 @@
 <?php
-
+/**
+ * All models in the Users plugin SHOULD inheirit from this model
+ */
 App::uses('AppModel', 'Model');
 
+/**
+ * All models in the Users plugin SHOULD inheirit from this model
+ * @package Users
+ */
 class UsersAppModel extends AppModel {
 
     /**
@@ -18,6 +24,7 @@ class UsersAppModel extends AppModel {
      * - When a password is passed, create a new salt value for that user and hash it with the password to create a hash
      * passwords will never be saved as either plain text or in a password column.
      * 
+     * @param array $options
      * @return boolean
      */
     public function beforeSave($options = array()) {

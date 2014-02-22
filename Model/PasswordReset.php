@@ -1,6 +1,8 @@
 <?php
 /**
- * Provides a model for mananging password resets
+ * An entry in the password_resets table provides a token that will allow a user to reset their password. The token is
+ * the id field the record, this is emailed to the user requesting the reset and expires after 24 hours.
+ *
  *
  * Copyright 2013, Jason D Snider. (http://jasonsnider.com)
  *
@@ -21,7 +23,8 @@ App::uses('CakeEmail', 'Network/Email');
 App::uses('String', 'Utility');
 
 /**
- * Provides a model for mananging users
+ * An entry in the password_resets table provides a token that will allow a user to reset their password. The token is
+ * the id field the record, this is emailed to the user requesting the reset and expires after 24 hours.
  * @author Jason D Snider <jason@jasonsnider.com>
  * @package	Users
  */
@@ -88,10 +91,8 @@ class PasswordReset extends UsersAppModel {
 
     /**
      * Creates the data needed for requesting a new password.
-     * 
      * Returns true if the password reset request data was saved successfully.
-     * 
-     * @param string $id
+     * @param string $userId The id of the user requesting the reset
      * @return boolean|string
      */
     public function createPasswordReset($userId) {        
@@ -138,6 +139,7 @@ class PasswordReset extends UsersAppModel {
 
     
     /**
+     * Returns true if a PasswordReset has expired.
      * @param string $created
      * @param string $isUnix
      * @return boolean
