@@ -34,7 +34,8 @@ class CtrlComponentTest extends ControllerTestCase {
     public $Controller = null;
     public $fixtures = array(
         'plugin.users.user_privilege',
-        'plugin.users.user'
+        'plugin.users.user',
+		'plugin.users.user_profile'
     );
 
     /**
@@ -70,7 +71,7 @@ class CtrlComponentTest extends ControllerTestCase {
      */
     public function testPrivilegesByCheckingAdainstTheDefaultFirstUserSettings() {
         $controllers = $this->CtrlComponent->get();
-        debug($controllers);
+        //debug($controllers);
 
         $this->assertArrayHasKey('UsersController', $controllers);
         $this->assertArrayHasKey('UserGroupsController', $controllers);
@@ -92,8 +93,6 @@ class CtrlComponentTest extends ControllerTestCase {
         $this->assertContains('admin_view', $controllers['UserGroupsController']);
         $this->assertContains('admin_edit', $controllers['UserGroupsController']);
         $this->assertContains('admin_delete', $controllers['UserGroupsController']);
-
-        $this->assertContains('display', $controllers['PagesController']);
     }
 
 }
