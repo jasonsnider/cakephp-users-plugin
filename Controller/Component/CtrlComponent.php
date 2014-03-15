@@ -35,7 +35,6 @@ class CtrlComponent extends Component {
     public function getControllers() {
 
         $aCtrlClasses = App::objects('controller');
-
         foreach ($aCtrlClasses as $controller) {
             if ($controller != 'AppController') {
                 // Load the controller
@@ -70,7 +69,6 @@ class CtrlComponent extends Component {
     public function getPlugins() {
         $pluginDirs = App::objects('plugin', null, false);
         $plugins = array();
-
         foreach ($pluginDirs as $pluginDir) {
 
             $pluginClasses = App::objects('controller', APP . 'Plugin' . DS . $pluginDir . DS . 'Controller', false);
@@ -107,7 +105,6 @@ class CtrlComponent extends Component {
     public function getPluginControllers() {
 
         $plugins = $this->getPlugins();
-
         $pluginControllers = array();
 
         foreach ($plugins as $plugin) {
@@ -120,13 +117,14 @@ class CtrlComponent extends Component {
     }
 
     /**
-     * Retrives a list of all controllers and action(including plugins)
-     *
-     * @access public
+     * Retrives a list of all actions and conrtrollers in the system
      * @return array
      */
     public function get() {
-        return array_merge($this->getControllers(), $this->getPluginControllers());
+		$applicationControllers = $this->getPluginControllers();
+		$pluginControllers = $this->getPluginControllers();
+        $allControllers = array_merge($applicationControllers, $pluginControllers);
+		return $allControllers;
     }
 
     /**
