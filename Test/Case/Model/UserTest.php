@@ -366,7 +366,7 @@ class UserTest extends CakeTestCase {
     public function testFetchUserSalt() {
 
         $results = $this->User->fetchUserSalt('jason');
-        $this->assertEquals($results, 'a5ca1c6afeac34b60b85aeb2e7e783ae8569d3eeb43bea71ab97f8567f7ba59db1f4e728a120473e75069e7f1f2cdbec689d5077311d3543892bcf93c8cc2ba0');
+        $this->assertEquals($results, 'd2a934a176873d8d826743efd6906c2a948ea2e03c9652d4fc5a4a0f153e56518b81c3d06b5b6b44e3965c82495870538e5b3485ffca42181b21a74ed6c7b385');
     }
 
     /**
@@ -399,7 +399,7 @@ class UserTest extends CakeTestCase {
 
         $data = array();
         $data['User']['username'] = 'jason';
-        $data['User']['password'] = 'password';
+        $data['User']['password'] = 'password1';
         $attempt = $this->User->processLoginAttempt($data);
         $this->assertArrayHasKey('id', $attempt['User']);
     }
