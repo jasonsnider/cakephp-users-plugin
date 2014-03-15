@@ -42,8 +42,8 @@ class UserFixture extends CakeTestFixture {
         array(
             'id' => '50a0edcf-d144-4470-ba4e-05437f000007',
             'username' => 'jason',
-            'hash' => '6f4f92e39381cf2dd9af52c31e2f10fa727586faa5290e8b036e57e898c81f7df24c6cef601b9e232df360d77500614750e794ce219b0c9fea8f5a35269f6c69',
-            'salt' => 'a5ca1c6afeac34b60b85aeb2e7e783ae8569d3eeb43bea71ab97f8567f7ba59db1f4e728a120473e75069e7f1f2cdbec689d5077311d3543892bcf93c8cc2ba0',
+            'hash' => '80aee85e71523fecdcfd50e2a9439643f8f482c9dd3348fcb19aaec96f587a9642e586fe249fc15b9f579685b9765e3217b60e3a252b90d7ea96c2407ab36f17',
+            'salt' => 'd2a934a176873d8d826743efd6906c2a948ea2e03c9652d4fc5a4a0f153e56518b81c3d06b5b6b44e3965c82495870538e5b3485ffca42181b21a74ed6c7b385',
 			'root' => 1,
 			'employee' => 1,
 			'protected' => 1,
