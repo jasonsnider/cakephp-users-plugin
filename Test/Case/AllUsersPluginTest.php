@@ -7,15 +7,6 @@ require_once ROOT . DS . APP_DIR . DS . 'Test' . DS . 'Case' . DS . 'AllTestCase
 /**
  */
 class AllUsersPluginTest extends AllTestCase {
-	
-	/**
-	 * Constructor
-	 * Passes the plugin to be tested to the parent.
-	 */
-	public function __construct() {
-		parent::__construct('Users');
-	}
-
 	/**
 	 * Assemble Test Suite
 	 *
@@ -23,7 +14,7 @@ class AllUsersPluginTest extends AllTestCase {
 	 */
 	public static function suite() {
 		$suite = new self;
-		$files = $suite->getTestFiles();
+		$files = $suite->getTestFiles('Users');
 		$suite->addTestFiles($files);
 
 		return $suite;
