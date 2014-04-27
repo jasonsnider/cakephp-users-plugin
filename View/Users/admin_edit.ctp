@@ -1,10 +1,5 @@
-<h1><?php echo __d('users', 'Admin :: Edit User'); ?></h1>
-<ul class="nav nav-pills">
-    <li><?php echo $this->Html->link('Index', '/admin/users/users'); ?></li>
-    <li><?php echo $this->Html->link('Edit', "/admin/users/users/edit/{$id}"); ?></li>
-</ul>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
     <?php 
         echo $this->Form->create(
             'User', 
@@ -66,7 +61,11 @@
                     array(
                         'label' => $user_group['UserGroup']['name'],
                         'type' => 'checkbox',
-                        'checked' => true
+						'class'=>false,
+                        'checked' => true,                        
+						'div'=>array(
+							'class'=>'form-group form-group-radio-inline'
+						),
                     )
                 );
             } else {
@@ -76,7 +75,11 @@
                     "UserGroupUser.{$x}.member", 
                     array(
                         'label' => $user_group['UserGroup']['name'],
-                        'type' => 'checkbox'
+                        'type' => 'checkbox',
+						'class'=>false,
+                        'div'=>array(
+							'class'=>'form-group form-group-radio-inline'
+						),
                     )
                 );
 
@@ -146,7 +149,9 @@
                         ),
                         'value' => $allowed,
                         'class'=>false,
-                        'div'=>false
+                        'div'=>array(
+							'class'=>'form-group form-group-radio-inline'
+						),
                     )
                 );
             }
