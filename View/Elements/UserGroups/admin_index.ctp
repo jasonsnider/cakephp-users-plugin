@@ -1,5 +1,5 @@
 <ul class="nav nav-sidebar">
-	<li><a href="/admin/users/users">Users</a></li>
+	<li><?php echo $this->Html->link(__('New User Group'), "/admin/users/user_groups/create"); ?></li>
 	<li class="divider"></li>
-	<li><a href="#Top">Top</a></li>
+	<li><?php echo $this->Html->link(__('Top'), "#Top"); ?></li>
 </ul>
