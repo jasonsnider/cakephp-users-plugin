@@ -78,19 +78,16 @@ class EmailAddressesController extends UsersAppController {
      * @param string $model_id
      */
     public function admin_create($model, $model_id) {
-
         if (!empty($this->data)) {
             if ($this->EmailAddress->save($this->data)) {
-
                 $this->Session->setFlash(__('Your email address has been saved!'), 'success');
-
-                $controller = Inflector::pluralize(Inflector::underscore($model));
-                $this->redirect("/admin/{$controller}/edit/{$model_id}");
+                $this->redirect($this->request->data['EmailAddress']['referer']);
             } else {
                 $this->Session->setFlash(__('Your email address could not be saved!'), 'error');
             }
         } else {
-            $this->request->data['EmailAddress'] = compact('model', 'model_id');
+			$referer = $this->referer();
+            $this->request->data['EmailAddress'] = compact('model', 'model_id', 'referer');
         }
     }
 

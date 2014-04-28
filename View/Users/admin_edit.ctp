@@ -39,9 +39,7 @@
 		echo $this->Form->input("EmailAddress.{$i}.email");
 	endfor;
 
-	echo $this->Html->link(
-			__d('users', 'Add an Email'), "/admin/users/email_addresses/create/user/{$this->data['User']['id']}"
-	);
+	echo $this->Html->link(__('Add an Email'), "/admin/users/email_addresses/create/user/{$this->data['User']['id']}");
 	?>
 </fieldset>
 
