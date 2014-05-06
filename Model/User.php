@@ -460,5 +460,18 @@ class User extends UsersAppModel {
         //Something went wrong, return an empty array
         return array();
     }
+	
+	/**
+	 * Returns a list of users
+	 * return array
+	 */
+	public function fetchUserList(){
+		return $this->find(
+			'list',
+			array(
+				'contain'=>array()
+			)
+		);
+	}
 
 }

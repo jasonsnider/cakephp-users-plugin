@@ -436,4 +436,12 @@ class UserTest extends CakeTestCase {
         //$this->assertArrayHasKey('password', $this->User->validationErrors);
         $this->assertEmpty($attempt);
     }
+	
+/**
+ * Passes if the returned user count is 3
+ * @covers User::fetchUserList()
+ */	
+	public function testFetchUserListReturnsTheProperUserCount(){
+		$this->assertEquals(4, count($this->User->fetchUserList()));
+	}
 }
