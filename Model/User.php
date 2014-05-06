@@ -469,7 +469,13 @@ class User extends UsersAppModel {
 		return $this->find(
 			'list',
 			array(
-				'contain'=>array()
+				'fields'=>array(
+					'User.id',
+					'UserProfile.display_name'
+				),
+				'contain'=>array(
+					'UserProfile'
+				)
 			)
 		);
 	}
