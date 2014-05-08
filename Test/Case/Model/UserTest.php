@@ -35,6 +35,7 @@ class UserTest extends CakeTestCase {
         'plugin.users.user_group_user',
         'plugin.users.user',
         'plugin.users.user_privilege',
+		'plugin.users.user_profile',
         'plugin.users.user_setting'
     );
 
