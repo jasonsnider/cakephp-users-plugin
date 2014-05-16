@@ -1,6 +1,8 @@
 <?php 
 class UserSchema extends CakeSchema {
 
+	public $file = 'schema_1.php';
+
 	public function before($event = array()) {
 		return true;
 	}
