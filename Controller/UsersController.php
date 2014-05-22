@@ -3,7 +3,7 @@
 /**
  * Provides controll logic for managing users
  *
- * Parbake (http://jasonsnider.com/parbake)
+ * JSC (http://jasonsnider.com/jsc)
  * Copyright 2012, Jason D Snider. (http://jasonsnider.com)
  *
  * Licensed under The MIT License
@@ -90,7 +90,7 @@ class UsersController extends UsersAppController {
      */
     public function create() {
 
-        if(Configure::read('Parbake.Users.allow_new_users')===false){
+        if(Configure::read('JSC.Users.allow_new_users')===false){
             $this->Session->setFlash(
                 __("I'm sorry, we are not accepting new users at this time."),
                 'info'
@@ -368,7 +368,7 @@ class UsersController extends UsersAppController {
             if($passwordResetConfirmation){
                 
                 $serverName = env('SERVER_NAME');
-                $entityName = 'The Parbake Project';
+                $entityName = 'JSC';
 
                 $email = new CakeEmail('passwordReset');
                 $email->to($user['EmailAddress'][0]['email'])

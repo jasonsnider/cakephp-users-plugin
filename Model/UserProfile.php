@@ -2,7 +2,7 @@
 /**
  * Provides a model for mananging a users profile data
  *
- * Parbake (http://jasonsnider.com/parbake)
+ * JSC (http://jasonsnider.com/jsc)
  * Copyright 2013, Jason D Snider. (http://jasonsnider.com)
  *
  * Licensed under The MIT License

@@ -3,7 +3,7 @@
 /**
  * Provides a model for mananging user settings
  *
- * Parbake (http://jasonsnider.com/parbake)
+ * JSC (http://jasonsnider.com/jsc)
  * Copyright 2012, Jason D Snider. (http://jasonsnider.com)
  *
  * Licensed under The MIT License
