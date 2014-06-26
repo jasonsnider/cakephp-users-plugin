@@ -40,7 +40,7 @@ class UserGroupUser extends UsersAppModel {
      * @var array 
      */
     public $actsAs = array(
-        'Utilities.Loggable',
+        'Jsc.Loggable',
         'Users.Scrubable' => array(
             'Filters' => array(
                 'trim' => '*',

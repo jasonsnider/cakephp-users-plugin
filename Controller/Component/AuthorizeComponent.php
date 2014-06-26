@@ -12,7 +12,7 @@
  * @link http://jasonsnider.com
  * @license MIT License (http://www.opensource.org/licenses/mit-licensephp)
  */
-App::uses('AppController', 'Controller');
+App::uses('JscAppController', 'Jsc.Controller');
 
 /**
  * A class for determinig if a user is authorized for a particular actions.

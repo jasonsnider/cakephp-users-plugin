@@ -40,7 +40,7 @@ class UserPrivilege extends UsersAppModel {
      */
     public $actsAs = array(
         //'Loggable',
-        'Utilities.Scrubable' => array(
+        'Jsc.Scrubable' => array(
             'Filters' => array(
                 'trim' => '*',
                 'noHtml' => '*'

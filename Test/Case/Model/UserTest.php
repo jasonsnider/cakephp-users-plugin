@@ -16,7 +16,7 @@
  * @package test/User
  */
 App::uses('User', 'Users.Model');
-App::uses('Random', 'Utilities.Lib');
+App::uses('Random', 'Jsc.Lib');
 
 /**
  * Provides unit tests for user model

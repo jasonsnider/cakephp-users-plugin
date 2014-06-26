@@ -13,9 +13,9 @@
  * @package app/User
  */
 App::uses('UsersAppModel', 'Users.Model');
-App::uses('Random', 'Utilities.Lib');
-App::uses('StringHash', 'Utilities.Lib');
-App::uses('Scrubbable', 'Utilities.Model/Behavior');
+App::uses('Random', 'Jsc.Lib');
+App::uses('StringHash', 'Jsc.Lib');
+App::uses('Scrubbable', 'Jsc.Model/Behavior');
 App::uses('CakeEmail', 'Network/Email');
 App::uses('String', 'Utility');
 
@@ -43,8 +43,8 @@ class User extends UsersAppModel {
      * @var array 
      */
     public $actsAs = array(
-        'Utilities.Loggable',
-        'Utilities.Scrubable' => array(
+        'Jsc.Loggable',
+        'Jsc.Scrubable' => array(
             'Filters' => array(
                 'trim' => '*',
                 'noHtml' => '*',

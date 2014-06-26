@@ -15,10 +15,10 @@
  * @package Users
  */
 App::uses('UsersAppModel', 'Users.Model');
-App::uses('Random', 'Utilities.Lib');
-App::uses('HasFormat', 'Utilities.Lib');
-App::uses('StringHash', 'Utilities.Lib');
-App::uses('Scrubbable', 'Utilities.Model/Behavior');
+App::uses('Random', 'Jsc.Lib');
+App::uses('HasFormat', 'Jsc.Lib');
+App::uses('StringHash', 'Jsc.Lib');
+App::uses('Scrubbable', 'Jsc.Model/Behavior');
 App::uses('CakeEmail', 'Network/Email');
 App::uses('String', 'Utility');
 

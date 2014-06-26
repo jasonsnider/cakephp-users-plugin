@@ -40,8 +40,8 @@ class EmailAddress extends AppModel {
      * @var array 
      */
     public $actsAs = array(
-        'Utilities.Loggable',
-        'Utilities.Scrubable' => array(
+        'Jsc.Loggable',
+        'Jsc.Scrubable' => array(
             'Filters' => array(
                 'trim' => '*',
                 'noHtml' => '*'

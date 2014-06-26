@@ -15,8 +15,8 @@
  * @package test/User
  */
 App::uses('PasswordReset', 'Users.Model');
-App::uses('Random', 'Utilities.Lib');
-App::uses('HasFormat', 'Utilities.Lib');
+App::uses('Random', 'Jsc.Lib');
+App::uses('HasFormat', 'Jsc.Lib');
 
 /**
  * Provides unit tests for user model

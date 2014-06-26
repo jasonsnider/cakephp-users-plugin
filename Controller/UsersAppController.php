@@ -14,7 +14,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  * @package	Users
  */
-App::uses('AppController', 'Controller');
+App::uses('JscAppController', 'Jsc.Controller');
 
 /**
  * Application wide controller settings, properties and functionality
@@ -22,7 +22,7 @@ App::uses('AppController', 'Controller');
  * @author Jason D Snider <jason@jasonsnider.com>
  * @package app
  */
-class UsersAppController extends AppController {
+class UsersAppController extends JscAppController {
     
     /**
      * Called before action
